@@ -1,0 +1,400 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4E4060C714ED676300FCB4AB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E4060C614ED676300FCB4AB /* Foundation.framework */; };
+		4E4060CD14ED676300FCB4AB /* QGeocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E4060CC14ED676300FCB4AB /* QGeocoder.m */; };
+		4E4060D514ED676300FCB4AB /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E4060D414ED676300FCB4AB /* SenTestingKit.framework */; };
+		4E4060D714ED676300FCB4AB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E4060D614ED676300FCB4AB /* UIKit.framework */; };
+		4E4060D814ED676300FCB4AB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E4060C614ED676300FCB4AB /* Foundation.framework */; };
+		4E4060DB14ED676300FCB4AB /* libQGeocoder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E4060C314ED676300FCB4AB /* libQGeocoder.a */; };
+		4E4060E114ED676400FCB4AB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4E4060DF14ED676400FCB4AB /* InfoPlist.strings */; };
+		4E4060E414ED676400FCB4AB /* QGeocoderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E4060E314ED676400FCB4AB /* QGeocoderTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4E4060D914ED676300FCB4AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4E4060BA14ED676300FCB4AB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4E4060C214ED676300FCB4AB;
+			remoteInfo = QGeocoder;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		4E4060C314ED676300FCB4AB /* libQGeocoder.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libQGeocoder.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E4060C614ED676300FCB4AB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		4E4060CA14ED676300FCB4AB /* QGeocoder-Prefix.pch */ = {isa = PBXFileReference; path = "QGeocoder-Prefix.pch"; sourceTree = "<group>"; };
+		4E4060CB14ED676300FCB4AB /* QGeocoder.h */ = {isa = PBXFileReference; path = QGeocoder.h; sourceTree = "<group>"; };
+		4E4060CC14ED676300FCB4AB /* QGeocoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QGeocoder.m; sourceTree = "<group>"; };
+		4E4060D314ED676300FCB4AB /* QGeocoderTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QGeocoderTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E4060D414ED676300FCB4AB /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		4E4060D614ED676300FCB4AB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		4E4060DE14ED676400FCB4AB /* QGeocoderTests-Info.plist */ = {isa = PBXFileReference; path = "QGeocoderTests-Info.plist"; sourceTree = "<group>"; };
+		4E4060E014ED676400FCB4AB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		4E4060E214ED676400FCB4AB /* QGeocoderTests.h */ = {isa = PBXFileReference; path = QGeocoderTests.h; sourceTree = "<group>"; };
+		4E4060E314ED676400FCB4AB /* QGeocoderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QGeocoderTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4E4060C014ED676300FCB4AB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4E4060C714ED676300FCB4AB /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4E4060CF14ED676300FCB4AB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4E4060D514ED676300FCB4AB /* SenTestingKit.framework in Frameworks */,
+				4E4060D714ED676300FCB4AB /* UIKit.framework in Frameworks */,
+				4E4060D814ED676300FCB4AB /* Foundation.framework in Frameworks */,
+				4E4060DB14ED676300FCB4AB /* libQGeocoder.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4E4060B814ED676300FCB4AB = {
+			isa = PBXGroup;
+			children = (
+				4E4060C814ED676300FCB4AB /* QGeocoder */,
+				4E4060DC14ED676300FCB4AB /* QGeocoderTests */,
+				4E4060C514ED676300FCB4AB /* Frameworks */,
+				4E4060C414ED676300FCB4AB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4E4060C414ED676300FCB4AB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4E4060C314ED676300FCB4AB /* libQGeocoder.a */,
+				4E4060D314ED676300FCB4AB /* QGeocoderTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4E4060C514ED676300FCB4AB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4E4060C614ED676300FCB4AB /* Foundation.framework */,
+				4E4060D414ED676300FCB4AB /* SenTestingKit.framework */,
+				4E4060D614ED676300FCB4AB /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4E4060C814ED676300FCB4AB /* QGeocoder */ = {
+			isa = PBXGroup;
+			children = (
+				4E4060CB14ED676300FCB4AB /* QGeocoder.h */,
+				4E4060CC14ED676300FCB4AB /* QGeocoder.m */,
+				4E4060C914ED676300FCB4AB /* Supporting Files */,
+			);
+			path = QGeocoder;
+			sourceTree = "<group>";
+		};
+		4E4060C914ED676300FCB4AB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4E4060CA14ED676300FCB4AB /* QGeocoder-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4E4060DC14ED676300FCB4AB /* QGeocoderTests */ = {
+			isa = PBXGroup;
+			children = (
+				4E4060E214ED676400FCB4AB /* QGeocoderTests.h */,
+				4E4060E314ED676400FCB4AB /* QGeocoderTests.m */,
+				4E4060DD14ED676400FCB4AB /* Supporting Files */,
+			);
+			path = QGeocoderTests;
+			sourceTree = "<group>";
+		};
+		4E4060DD14ED676400FCB4AB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4E4060DE14ED676400FCB4AB /* QGeocoderTests-Info.plist */,
+				4E4060DF14ED676400FCB4AB /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		4E4060C114ED676300FCB4AB /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		4E4060C214ED676300FCB4AB /* QGeocoder */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4E4060E714ED676400FCB4AB /* Build configuration list for PBXNativeTarget "QGeocoder" */;
+			buildPhases = (
+				4E4060BF14ED676300FCB4AB /* Sources */,
+				4E4060C014ED676300FCB4AB /* Frameworks */,
+				4E4060C114ED676300FCB4AB /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = QGeocoder;
+			productName = QGeocoder;
+			productReference = 4E4060C314ED676300FCB4AB /* libQGeocoder.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		4E4060D214ED676300FCB4AB /* QGeocoderTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4E4060EA14ED676400FCB4AB /* Build configuration list for PBXNativeTarget "QGeocoderTests" */;
+			buildPhases = (
+				4E4060CE14ED676300FCB4AB /* Sources */,
+				4E4060CF14ED676300FCB4AB /* Frameworks */,
+				4E4060D014ED676300FCB4AB /* Resources */,
+				4E4060D114ED676300FCB4AB /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4E4060DA14ED676300FCB4AB /* PBXTargetDependency */,
+			);
+			name = QGeocoderTests;
+			productName = QGeocoderTests;
+			productReference = 4E4060D314ED676300FCB4AB /* QGeocoderTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4E4060BA14ED676300FCB4AB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = 4E4060BD14ED676300FCB4AB /* Build configuration list for PBXProject "QGeocoder" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 4E4060B814ED676300FCB4AB;
+			productRefGroup = 4E4060C414ED676300FCB4AB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4E4060C214ED676300FCB4AB /* QGeocoder */,
+				4E4060D214ED676300FCB4AB /* QGeocoderTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4E4060D014ED676300FCB4AB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4E4060E114ED676400FCB4AB /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4E4060D114ED676300FCB4AB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4E4060BF14ED676300FCB4AB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4E4060CD14ED676300FCB4AB /* QGeocoder.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4E4060CE14ED676300FCB4AB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4E4060E414ED676400FCB4AB /* QGeocoderTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4E4060DA14ED676300FCB4AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4E4060C214ED676300FCB4AB /* QGeocoder */;
+			targetProxy = 4E4060D914ED676300FCB4AB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		4E4060DF14ED676400FCB4AB /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4E4060E014ED676400FCB4AB /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4E4060E514ED676400FCB4AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		4E4060E614ED676400FCB4AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4E4060E814ED676400FCB4AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/QGeocoder.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "QGeocoder/QGeocoder-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		4E4060E914ED676400FCB4AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/QGeocoder.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "QGeocoder/QGeocoder-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		4E4060EB14ED676400FCB4AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "QGeocoder/QGeocoder-Prefix.pch";
+				INFOPLIST_FILE = "QGeocoderTests/QGeocoderTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		4E4060EC14ED676400FCB4AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "QGeocoder/QGeocoder-Prefix.pch";
+				INFOPLIST_FILE = "QGeocoderTests/QGeocoderTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4E4060BD14ED676300FCB4AB /* Build configuration list for PBXProject "QGeocoder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4E4060E514ED676400FCB4AB /* Debug */,
+				4E4060E614ED676400FCB4AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4E4060E714ED676400FCB4AB /* Build configuration list for PBXNativeTarget "QGeocoder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4E4060E814ED676400FCB4AB /* Debug */,
+				4E4060E914ED676400FCB4AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		4E4060EA14ED676400FCB4AB /* Build configuration list for PBXNativeTarget "QGeocoderTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4E4060EB14ED676400FCB4AB /* Debug */,
+				4E4060EC14ED676400FCB4AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4E4060BA14ED676300FCB4AB /* Project object */;
+}
