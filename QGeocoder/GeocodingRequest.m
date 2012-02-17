@@ -3,7 +3,7 @@
 //  QGeocoder
 //
 //  Created by Quentin Fasquel on 12/14/10.
-//  Copyright 2011 Soleil Noir. All rights reserved.
+//  Copyright 2011 Quentin Fasquel. All rights reserved.
 //
 
 #import "GeocodingRequest.h"
@@ -103,8 +103,7 @@ NSString * const GeocodingRequestOutputXML  = @"xml";
 }
 
 - (NSURL *)URL {
-    if (!_URL)
-    {
+    if (!_URL) {
         _URL = [[NSURL alloc] initWithString:
                 [[NSString stringWithFormat:
                   (_secure ? GeocodingSecureURL : GeocodingURL),
@@ -161,10 +160,7 @@ NSString * const GeocodingRequestOutputXML  = @"xml";
 
     self.executing = YES;
 
-    _connection = [[NSURLConnection alloc]
-                   initWithRequest:[NSURLRequest requestWithURL:self.URL]
-                   delegate:self];
-
+    _connection = [[NSURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:self.URL] delegate:self];
     [_connection start];
 }
 
@@ -186,14 +182,14 @@ NSString * const GeocodingRequestOutputXML  = @"xml";
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     if ([_delegate respondsToSelector:@selector(geocodingRequest:didFailWithError:)]) {
-        [_delegate performSelector:@selector(geocodingRequest:didFailWithError:) withObject:self withObject:error];
+        [_delegate geocodingRequest:self didFailWithError:error];
     }
     [self terminate];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     if ([_delegate respondsToSelector:@selector(geocodingRequestDidFinishLoading:)]) {
-        [_delegate performSelector:@selector(geocodingRequestDidFinishLoading:) withObject:self];
+        [_delegate geocodingRequestDidFinishLoading:self];
     }
     [self terminate];
 }

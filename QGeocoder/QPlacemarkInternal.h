@@ -3,7 +3,7 @@
 //  QGeocoder
 //
 //  Created by Quentin Fasquel on 25/07/11.
-//  Copyright 2011 Soleil Noir. All rights reserved.
+//  Copyright 2011 Quentin Fasquel. All rights reserved.
 //
 
 #import "QPlacemark.h"

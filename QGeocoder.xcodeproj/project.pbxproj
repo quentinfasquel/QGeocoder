@@ -13,17 +13,17 @@
 		4E4060DB14ED676300FCB4AB /* libQGeocoder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E4060C314ED676300FCB4AB /* libQGeocoder.a */; };
 		4E4060E114ED676400FCB4AB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4E4060DF14ED676400FCB4AB /* InfoPlist.strings */; };
 		4E4060E414ED676400FCB4AB /* QGeocoderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E4060E314ED676400FCB4AB /* QGeocoderTests.m */; };
-		4E4060F314ED67AA00FCB4AB /* GeocodingRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E4060ED14ED67A900FCB4AB /* GeocodingRequest.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		4E4060F314ED67AA00FCB4AB /* GeocodingRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E4060ED14ED67A900FCB4AB /* GeocodingRequest.h */; settings = {ATTRIBUTES = (); }; };
 		4E4060F414ED67AA00FCB4AB /* GeocodingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E4060EE14ED67A900FCB4AB /* GeocodingRequest.m */; };
-		4E4060F514ED67AA00FCB4AB /* GeocodingResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E4060EF14ED67A900FCB4AB /* GeocodingResponse.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		4E4060F514ED67AA00FCB4AB /* GeocodingResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E4060EF14ED67A900FCB4AB /* GeocodingResponse.h */; settings = {ATTRIBUTES = (); }; };
 		4E4060F614ED67AA00FCB4AB /* GeocodingResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E4060F014ED67A900FCB4AB /* GeocodingResponse.m */; };
-		4E4060F714ED67AA00FCB4AB /* NSObject+GeocodingRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E4060F114ED67AA00FCB4AB /* NSObject+GeocodingRequest.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		4E4060F714ED67AA00FCB4AB /* NSObject+GeocodingRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E4060F114ED67AA00FCB4AB /* NSObject+GeocodingRequest.h */; settings = {ATTRIBUTES = (); }; };
 		4E4060F814ED67AA00FCB4AB /* NSObject+GeocodingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E4060F214ED67AA00FCB4AB /* NSObject+GeocodingRequest.m */; };
 		4E4060FF14ED67C100FCB4AB /* QGeocoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E4060F914ED67C100FCB4AB /* QGeocoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4E40610014ED67C100FCB4AB /* QGeocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E4060FA14ED67C100FCB4AB /* QGeocoder.m */; };
 		4E40610114ED67C100FCB4AB /* QPlacemark.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E4060FB14ED67C100FCB4AB /* QPlacemark.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4E40610214ED67C100FCB4AB /* QPlacemark.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E4060FC14ED67C100FCB4AB /* QPlacemark.m */; };
-		4E40610314ED67C100FCB4AB /* QPlacemarkInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E4060FD14ED67C100FCB4AB /* QPlacemarkInternal.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		4E40610314ED67C100FCB4AB /* QPlacemarkInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E4060FD14ED67C100FCB4AB /* QPlacemarkInternal.h */; settings = {ATTRIBUTES = (); }; };
 		4E40610414ED67C100FCB4AB /* QPlacemarkInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E4060FE14ED67C100FCB4AB /* QPlacemarkInternal.m */; };
 		4E40610714ED68F000FCB4AB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E40610614ED68F000FCB4AB /* CoreLocation.framework */; };
 		4E40611214ED6CBD00FCB4AB /* JSONKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E40610F14ED6CBD00FCB4AB /* JSONKit.h */; };
@@ -258,7 +258,7 @@
 		4E4060BA14ED676300FCB4AB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 			};
 			buildConfigurationList = 4E4060BD14ED676300FCB4AB /* Build configuration list for PBXProject "QGeocoder" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -463,6 +463,7 @@
 				4E4060E914ED676400FCB4AB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4E4060EA14ED676400FCB4AB /* Build configuration list for PBXNativeTarget "QGeocoderTests" */ = {
 			isa = XCConfigurationList;
@@ -471,6 +472,7 @@
 				4E4060EC14ED676400FCB4AB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
