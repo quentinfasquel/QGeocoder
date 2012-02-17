@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
-#define QGEOCODER_IPHONE_5_0_API_WRAPPER 1
+#define QGEOCODER_IPHONE_5_0_API_WRAPPER 0
 
 @class GeocodingRequest;
 @class GeocodingResponse;
