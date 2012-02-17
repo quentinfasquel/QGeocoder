@@ -67,6 +67,7 @@
 		4E40610F14ED6CBD00FCB4AB /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		4E40611014ED6CBD00FCB4AB /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		4E40611114ED6CBD00FCB4AB /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		4E4A3B9614EE727D001E1669 /* QCeododer.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = QCeododer.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +96,7 @@
 		4E4060B814ED676300FCB4AB = {
 			isa = PBXGroup;
 			children = (
+				4E4A3B9614EE727D001E1669 /* QCeododer.xcconfig */,
 				4E40610C14ED6CBD00FCB4AB /* External */,
 				4E4060C814ED676300FCB4AB /* QGeocoder */,
 				4E4060DC14ED676300FCB4AB /* QGeocoderTests */,
@@ -223,6 +225,7 @@
 				4E4060BF14ED676300FCB4AB /* Sources */,
 				4E4060C014ED676300FCB4AB /* Frameworks */,
 				4E4060C114ED676300FCB4AB /* Headers */,
+				4E4AE17F14EEAB1900DBC29B /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -302,6 +305,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+		4E4AE17F14EEAB1900DBC29B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script force compile the \"other\" platform (iphoneos or iphonesimulator)\nif [ \"true\" == ${OTHER_INVOKED:-false} ]; then\nexit 0\nelse\n\nif [ ${PLATFORM_NAME} = \"iphonesimulator\" ]; then\nOTHER_PLATFORM_NAME=iphoneos\nelse\nOTHER_PLATFORM_NAME=iphonesimulator\nfi\n\nexport OTHER_INVOKED=\"true\"\necho \"XCode has selected SDK: ${PLATFORM_NAME} ..therefore, OTHER_PLATFORM_NAME = ${OTHER_PLATFORM_NAME}\"\n\nACTION=\"build\"\nBUILD_ROOT=\"${BUILD_ROOT}\"\n\n#RUN_CLANG_STATIC_ANALYZER=NO\n\n# Build the other platform\nxcodebuild -configuration \"${CONFIGURATION}\" -target \"${TARGET_NAME}\" -sdk \"${OTHER_PLATFORM_NAME}\" ${ACTION} BUILD_DIR=\"${BUILD_DIR}\"\n#\nrm -rf \"build\"\n\nCONFIG_UNIVERSAL_DIR=${SYMROOT}/${CONFIGURATION}-universal\n# Create generate products directory\n[ -d ${CONFIG_UNIVERSAL_DIR} ] || mkdir ${CONFIG_UNIVERSAL_DIR}\n\nCONFIG_IPHONEOS_DIR=${SYMROOT}/${CONFIGURATION}-iphoneos\nCONFIG_IPHONESIMULATOR_DIR=${SYMROOT}/${CONFIGURATION}-iphonesimulator\n# Combine both platform\nlipo -create -output \"${CONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" \"${CONFIG_IPHONEOS_DIR}/${EXECUTABLE_NAME}\" \"${CONFIG_IPHONESIMULATOR_DIR}/${EXECUTABLE_NAME}\"\n\n# Copy public headers\n# * needs to be outside the double quotes?\ncp \"${CONFIG_IPHONEOS_DIR}/usr/local/include/\"* \"${CONFIG_UNIVERSAL_DIR}\"\n\n# Duplicate CONFIG_UNIVERSAL_DIR into project dir\n[ -d ${PROJECT_DIR}/Products ] || mkdir ${PROJECT_DIR}/Products\ncp \"${CONFIG_UNIVERSAL_DIR}/\"* \"${PROJECT_DIR}/Products\"\n\nfi\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -392,24 +409,24 @@
 		};
 		4E4060E814ED676400FCB4AB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4E4A3B9614EE727D001E1669 /* QCeododer.xcconfig */;
 			buildSettings = {
 				DSTROOT = /tmp/QGeocoder.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QGeocoder/QGeocoder-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
 		4E4060E914ED676400FCB4AB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4E4A3B9614EE727D001E1669 /* QCeododer.xcconfig */;
 			buildSettings = {
 				DSTROOT = /tmp/QGeocoder.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QGeocoder/QGeocoder-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
