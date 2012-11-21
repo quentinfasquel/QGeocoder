@@ -27,7 +27,6 @@
 		4E40610414ED67C100FCB4AB /* QPlacemarkInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E4060FE14ED67C100FCB4AB /* QPlacemarkInternal.m */; };
 		4E40610714ED68F000FCB4AB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E40610614ED68F000FCB4AB /* CoreLocation.framework */; };
 		4E40611214ED6CBD00FCB4AB /* JSONKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E40610F14ED6CBD00FCB4AB /* JSONKit.h */; };
-		4E40611314ED6CBD00FCB4AB /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E40611014ED6CBD00FCB4AB /* JSONKit.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,7 +66,7 @@
 		4E40610F14ED6CBD00FCB4AB /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		4E40611014ED6CBD00FCB4AB /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		4E40611114ED6CBD00FCB4AB /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		4E4A3B9614EE727D001E1669 /* QCeododer.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = QCeododer.xcconfig; sourceTree = "<group>"; };
+		4E4A3B9614EE727D001E1669 /* QGeododer.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = QGeododer.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,7 +95,7 @@
 		4E4060B814ED676300FCB4AB = {
 			isa = PBXGroup;
 			children = (
-				4E4A3B9614EE727D001E1669 /* QCeododer.xcconfig */,
+				4E4A3B9614EE727D001E1669 /* QGeododer.xcconfig */,
 				4E40610C14ED6CBD00FCB4AB /* External */,
 				4E4060C814ED676300FCB4AB /* QGeocoder */,
 				4E4060DC14ED676300FCB4AB /* QGeocoderTests */,
@@ -333,7 +332,6 @@
 				4E40610014ED67C100FCB4AB /* QGeocoder.m in Sources */,
 				4E40610214ED67C100FCB4AB /* QPlacemark.m in Sources */,
 				4E40610414ED67C100FCB4AB /* QPlacemarkInternal.m in Sources */,
-				4E40611314ED6CBD00FCB4AB /* JSONKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,11 +407,15 @@
 		};
 		4E4060E814ED676400FCB4AB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4E4A3B9614EE727D001E1669 /* QCeododer.xcconfig */;
+			baseConfigurationReference = 4E4A3B9614EE727D001E1669 /* QGeododer.xcconfig */;
 			buildSettings = {
 				DSTROOT = /tmp/QGeocoder.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QGeocoder/QGeocoder-Prefix.pch";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../Workspace/Nespresso/shopios/trunk/External/QGeocoder\"",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				SKIP_INSTALL = YES;
 			};
@@ -421,11 +423,15 @@
 		};
 		4E4060E914ED676400FCB4AB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4E4A3B9614EE727D001E1669 /* QCeododer.xcconfig */;
+			baseConfigurationReference = 4E4A3B9614EE727D001E1669 /* QGeododer.xcconfig */;
 			buildSettings = {
 				DSTROOT = /tmp/QGeocoder.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QGeocoder/QGeocoder-Prefix.pch";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../Workspace/Nespresso/shopios/trunk/External/QGeocoder\"",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				SKIP_INSTALL = YES;
 			};

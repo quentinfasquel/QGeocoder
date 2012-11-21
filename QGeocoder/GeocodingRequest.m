@@ -105,12 +105,10 @@ NSString * const GeocodingRequestOutputXML  = @"xml";
 - (NSURL *)URL {
     if (!_URL) {
         _URL = [[NSURL alloc] initWithString:
-                [[NSString stringWithFormat:
-                  (_secure ? GeocodingSecureURL : GeocodingURL),
-                  GeocodingRequestOutputJSON,
-                  [self parameters]]
-                 stringByAddingPercentEscapesUsingEncoding:
-                 NSASCIIStringEncoding]];
+                [NSString stringWithFormat:
+                 (_secure ? GeocodingSecureURL : GeocodingURL),
+                 GeocodingRequestOutputJSON,
+                 [self parameters]]];
     }
     return _URL;
 }

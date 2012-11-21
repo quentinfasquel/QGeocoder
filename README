@@ -3,10 +3,6 @@ QGeocoder is similar to CLGeocoder, it provides services of forward- and reverse
 The services use the Google Geocoding API : http://code.google.com/apis/maps/documentation/geocoding/#GeocodingRequests
 
 Since CLGeocoder is only available on iOS 5.0 and later, developers who look for more compatibility will be interested in QGeocoder.
-Plus, it does support the CLGeocoder API.
-
-* Compile with CLGeocoder API support 
-The 'QGEOCODER_IPHONE_5_0_API_WRAPPER' macro enable the 'usesCoreLocationGeocoder' property which make QGeocoder use CLGeocoder.
-This will only work on iOS 5.0 and later so you are responsible for it. When developing for iOS 5.x and EARLIER, this property should be related to '[[UIDevice currentDevice] systemVersion]'.
+Plus, google geocoding is much better.
 
 

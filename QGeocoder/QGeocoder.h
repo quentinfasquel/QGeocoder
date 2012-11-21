@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
-#define QGEOCODER_IPHONE_5_0_API_WRAPPER 0
 
 @class GeocodingRequest;
 @class GeocodingResponse;
@@ -18,16 +17,10 @@
 @private
     GeocodingRequest * _request;
     GeocodingResponse * _response;
-#if QGEOCODER_IPHONE_5_0_API_WRAPPER
-    CLGeocoder * _geocoder;
-#endif
 }
 
 @property (nonatomic, retain) id <QGeocoderDelegate> delegate;
 @property (nonatomic, readonly, getter = isGeocoding) BOOL geocoding;
-#if QGEOCODER_IPHONE_5_0_API_WRAPPER
-@property (nonatomic, assign) BOOL usesCoreLocationGeocoder;
-#endif
 
 // Optionnal parameters
 @property (nonatomic, copy) NSString * language;
@@ -36,8 +29,11 @@
 - (void)reverseGeocodeLocation:(CLLocation *)location;
 
 - (void)geocodeAddressDictionary:(NSDictionary *)addressDictionary;
+- (void)geocodeAddressDictionary:(NSDictionary *)addressDictionary completionHandler:(CLGeocodeCompletionHandler)completionHandler;
 - (void)geocodeAddressString:(NSString *)addressString;
+- (void)geocodeAddressString:(NSString *)addressString completionHandler:(CLGeocodeCompletionHandler)completionHandler;
 - (void)geocodeAddressString:(NSString *)addressString inRegion:(CLRegion *)region;
+- (void)geocodeAddressString:(NSString *)addressString inRegion:(CLRegion *)region completionHandler:(CLGeocodeCompletionHandler)completionHandler;
 
 - (void)cancelGeocode;
 

@@ -1,0 +1,8 @@
+# ignore individual user's xcode data
+*xcuserdata*
+*xcworkspace*
+
+# ignore mac os finder file
+.DS_Store
+
+Products*

@@ -12,9 +12,7 @@
 
 
 @interface QGeocoder ()
-#if QGEOCODER_IPHONE_5_0_API_WRAPPER
-@property (nonatomic, copy) CLGeocodeCompletionHandler geocodeCompletionHandler;
-#endif
+@property (retain, nonatomic) CLGeocodeCompletionHandler completionHandler;
 @end
 
 
@@ -22,16 +20,9 @@
 @synthesize delegate = _delegate;
 @synthesize language = _language;
 @synthesize region = _region;
-#if QGEOCODER_IPHONE_5_0_API_WRAPPER
-@synthesize geocodeCompletionHandler = _geocodeCompletionHandler;
-@synthesize usesCoreLocationGeocoder;
-#endif
+@synthesize completionHandler = _completionHandler;
 
 - (void)dealloc {
-#if QGEOCODER_IPHONE_5_0_API_WRAPPER
-    [_geocoder release];
-    [_geocodeCompletionHandler release];
-#endif
     [_language release];
     [_region release];
     [_request release];
@@ -43,127 +34,78 @@
 #pragma mark - Managing Geocoding Requests
 
 - (void)cancelGeocode {
-#if QGEOCODER_IPHONE_5_0_API_WRAPPER
-    if (usesCoreLocationGeocoder) {
-        [_geocoder cancelGeocode];
-    }
-    else
-#endif
     if (_request) {
         [_request cancel];
         [_request release], _request = nil;
     }
+
+    if (_completionHandler) {
+        [_completionHandler release], _completionHandler = nil;
+    }
 }
 
 - (BOOL)isGeocoding {
-#if QGEOCODER_IPHONE_5_0_API_WRAPPER
-    if (usesCoreLocationGeocoder) {
-        return [_geocoder isGeocoding];
-    }
-    else
-#endif
-        return [_request isExecuting];
+    return [_request isExecuting];
 }
-
-#if QGEOCODER_IPHONE_5_0_API_WRAPPER
-- (void)setDelegate:(id<QGeocoderDelegate>)delegate {
-    _delegate = delegate;
-
-    self.geocodeCompletionHandler = ^(NSArray * placemarks, NSError * error) {
-        if (error) {
-            [_delegate geocoder:self didFailWithError:error];
-        }
-        else {
-            [_delegate geocoder:self didFindPlacemarks:placemarks];
-        }
-    };
-}
-
-- (void)setUsesCoreLocationGeocoder:(BOOL)coreLocationGeocoder {
-    usesCoreLocationGeocoder = coreLocationGeocoder;
-    if (!_geocoder) {
-        _geocoder = [[CLGeocoder alloc] init];
-    }
-}
-#endif
-
 
 #pragma mark - Reverse Geocoding a Location
 
 - (void)reverseGeocodeLocation:(CLLocation *)location {
-#if QGEOCODER_IPHONE_5_0_API_WRAPPER
-    if (usesCoreLocationGeocoder) {
-        [_geocoder reverseGeocodeLocation:location completionHandler:self.geocodeCompletionHandler];
-    }
-    else
-#endif
-    {
-        [self cancelGeocode];
-        
-        _request = [[GeocodingRequest alloc] initWithCoordinate:location.coordinate delegate:self];
-        _request.region = _region;
-        _request.language = _language;
+    [self cancelGeocode];
+    
+    _request = [[GeocodingRequest alloc] initWithCoordinate:location.coordinate delegate:self];
+    _request.region = _region;
+    _request.language = _language;
 
-        if ([_delegate respondsToSelector:@selector(geocoderShouldUseSecureConnection:)]) {
-            _request.secure = [_delegate geocoderShouldUseSecureConnection:self];
-        }
-
-        [_request start];
+    if ([_delegate respondsToSelector:@selector(geocoderShouldUseSecureConnection:)]) {
+        _request.secure = [_delegate geocoderShouldUseSecureConnection:self];
     }
+
+    [_request start];
 }
 
 
 #pragma mark - Geocoding an Address
 
 - (void)geocodeAddressDictionary:(NSDictionary *)addressDictionary {
-#if QGEOCODER_IPHONE_5_0_API_WRAPPER
-    if (usesCoreLocationGeocoder) {
-        [_geocoder geocodeAddressDictionary:addressDictionary completionHandler:self.geocodeCompletionHandler];
-    }
-    else
-#endif
-    {
-        [self cancelGeocode];
-        // TODO
-    }
+    [self cancelGeocode];
+#warning TODO
 }
 
 - (void)geocodeAddressString:(NSString *)addressString {
-#if QGEOCODER_IPHONE_5_0_API_WRAPPER
-    if (usesCoreLocationGeocoder) {
-        [_geocoder geocodeAddressString:addressString completionHandler:self.geocodeCompletionHandler];
+    [self cancelGeocode];
+
+    _request = [[GeocodingRequest alloc] initWithAddress:addressString delegate:self];
+    _request.region = _region;
+    _request.language = _language;
+
+    if ([_delegate respondsToSelector:@selector(geocoderShouldUseSecureConnection:)]) {
+        _request.secure = [_delegate geocoderShouldUseSecureConnection:self];
     }
-    else
-#endif
-    {
-        [self cancelGeocode];
 
-        _request = [[GeocodingRequest alloc] initWithAddress:addressString delegate:self];
-        _request.region = _region;
-        _request.language = _language;
-
-        if ([_delegate respondsToSelector:@selector(geocoderShouldUseSecureConnection:)]) {
-            _request.secure = [_delegate geocoderShouldUseSecureConnection:self];
-        }
-
-        [_request start];
-    }    
+    [_request start];
 }
 
 - (void)geocodeAddressString:(NSString *)addressString inRegion:(CLRegion *)region {
-#if QGEOCODER_IPHONE_5_0_API_WRAPPER
-    if (usesCoreLocationGeocoder) {
-        [_geocoder geocodeAddressString:addressString inRegion:region completionHandler:self.geocodeCompletionHandler];
-    }
-    else
-#endif
-    {
-        [self cancelGeocode];
-
-        // TODO
-    }
+    [self cancelGeocode];
+#warning TODO
 }
 
+- (void)geocodeAddressDictionary:(NSDictionary *)addressDictionary completionHandler:(CLGeocodeCompletionHandler)completionHandler {
+    self.completionHandler = completionHandler;
+    [self geocodeAddressDictionary:addressDictionary];
+}
+
+- (void)geocodeAddressString:(NSString *)addressString completionHandler:(CLGeocodeCompletionHandler)completionHandler {
+//    ^(NSArray * placemarks, NSError * error)
+    self.completionHandler = completionHandler;
+    [self geocodeAddressString:addressString];
+}
+
+- (void)geocodeAddressString:(NSString *)addressString inRegion:(CLRegion *)region completionHandler:(CLGeocodeCompletionHandler)completionHandler {
+    self.completionHandler = completionHandler;
+    [self geocodeAddressString:addressString inRegion:region];
+}
 
 #pragma mark - Managing Internal Requests
 
@@ -172,7 +114,10 @@
 
     GeocodeStatusCode statusCode = _response.statusCode;
     if (statusCode == GeocodeStatusCodeOk || statusCode == GeocodeStatusCodeZeroResults) {
-        if ([_delegate respondsToSelector:@selector(geocoder:didFindPlacemarks:)]) {
+        if (_completionHandler) {
+            _completionHandler(_response.placemarks, nil);
+        }
+        else if ([_delegate respondsToSelector:@selector(geocoder:didFindPlacemarks:)]) {
             [_delegate geocoder:self didFindPlacemarks:_response.placemarks];
         }
     }
@@ -182,14 +127,19 @@
 
     [_request release], _request = nil;
     [_response release], _response = nil;
+    [_completionHandler release], _completionHandler = nil;
 }
 
 - (void)geocodingRequest:(GeocodingRequest *)request didFailWithError:(NSError *)error {
-    if ([_delegate respondsToSelector:@selector(geocoder:didFailWithError:)]) {
+    if (_completionHandler) {
+        _completionHandler([NSArray array], error);
+    }
+    else if ([_delegate respondsToSelector:@selector(geocoder:didFailWithError:)]) {
         [_delegate geocoder:self didFailWithError:error];        
     }
 
     [_request release], _request = nil;
+    [_completionHandler release], _completionHandler = nil;
 }
 
 @end
