@@ -8,7 +8,6 @@
 
 #import "GeocodingResponse.h"
 #import "QPlacemarkInternal.h"
-#import "JSONKit.h"
 
 static NSString * kGeocodingResults    = @"results";
 static NSString * kGeocodingStatusCode = @"status";
@@ -47,7 +46,7 @@ const NSString * kGeocodeStatusCodeInvalidRequest   = @"INVALID_REQUEST";
 
 - (id)initWithData:(NSData *)data {
     if ((self = [super init])) {
-        NSDictionary * JSON = [data objectFromJSONData];
+        NSDictionary * JSON = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         NSMutableArray * placemarks = [NSMutableArray array];
         NSArray * results = [JSON objectForKey:kGeocodingResults];
         for (id dictionary in results)
