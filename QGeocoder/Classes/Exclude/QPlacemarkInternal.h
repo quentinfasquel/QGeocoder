@@ -46,7 +46,13 @@ extern const NSString * kPlacemarkSubLocality;
 extern const NSString * kPlacemarkSubThoroughfare;
 extern const NSString * kPlacemarkThoroughfare;
 
+@interface QPlacemark () {
+    NSMutableDictionary * _addressDictionary;
+    CLLocation * _location;
+    CLRegion * _region;
+}
+@end
 
-@interface QPlacemark (Internal)
+@interface QPlacemark (Private)
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 @end

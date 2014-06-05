@@ -11,12 +11,7 @@
 
 @implementation QPlacemark
 
-- (void)dealloc {
-    [_addressDictionary release];
-    [_location release];
-    [_region release];
-    [super dealloc];
-}
+
 
 - (NSString *)description {
     NSString * formattedAddress = [(NSArray *)[_addressDictionary objectForKey:@"FormattedAddressLines"] componentsJoinedByString:@", "];

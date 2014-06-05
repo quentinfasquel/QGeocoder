@@ -20,9 +20,6 @@ const NSString * kGeocodeStatusCodeInvalidRequest   = @"INVALID_REQUEST";
 
 @implementation GeocodingResponse
 
-@synthesize placemarks   = _placemarks;
-@synthesize statusCode   = _statusCode;
-
 - (NSInteger)codeForString:(NSString *)statusString {
 
     if ([kGeocodeStatusCodeOk isEqualToString:statusString]) {
@@ -49,22 +46,14 @@ const NSString * kGeocodeStatusCodeInvalidRequest   = @"INVALID_REQUEST";
         NSDictionary * JSON = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         NSMutableArray * placemarks = [NSMutableArray array];
         NSArray * results = [JSON objectForKey:kGeocodingResults];
-        for (id dictionary in results)
-        {
-            QPlacemark * placemark = [[QPlacemark alloc] initWithDictionary:dictionary];
-            [placemarks addObject:placemark];
-            [placemark release];
+        for (id dictionary in results) {
+            [placemarks addObject:[[QPlacemark alloc] initWithDictionary:dictionary]];
         }
-        
+
         _placemarks = [placemarks copy];
         _statusCode = [self codeForString:[JSON valueForKey:kGeocodingStatusCode]];
     }
     return self;
-}
-
-- (void)dealloc {
-    [_placemarks release], _placemarks = nil;
-    [super dealloc];
 }
 
 @end

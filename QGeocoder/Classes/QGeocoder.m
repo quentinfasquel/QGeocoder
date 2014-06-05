@@ -17,9 +17,6 @@
 
 
 @implementation QGeocoder
-@synthesize delegate = _delegate;
-@synthesize language = _language;
-@synthesize region = _region;
 
 + (NSOperationQueue *)mainQueue {
     static dispatch_once_t once;
@@ -28,12 +25,6 @@
         GeocoderQueue = [[NSOperationQueue alloc] init];
     });
     return GeocoderQueue;
-}
-
-- (void)dealloc {
-    [_language release];
-    [_region release];
-    [super dealloc];
 }
 
 #pragma mark - Managing Geocoding Requests
@@ -61,16 +52,15 @@
 - (void)reverseGeocodeLocation:(CLLocation *)location {
     [self cancelGeocode];
     
-    GeocodingRequest * request = [[[GeocodingRequest alloc] initWithCoordinate:location.coordinate] autorelease];
+    GeocodingRequest * request = [[GeocodingRequest alloc] initWithCoordinate:location.coordinate];
     request.region = _region;
     request.language = _language;
 
-    if ([_delegate respondsToSelector:@selector(geocoderShouldUseSecureConnection:)]) {
-        request.secure = [_delegate geocoderShouldUseSecureConnection:self];
+    if ([self.delegate respondsToSelector:@selector(geocoderShouldUseSecureConnection:)]) {
+        request.secure = [self.delegate geocoderShouldUseSecureConnection:self];
     }
 
     [[QGeocoder mainQueue] addOperation:[RequestOperation requestOperationWithURL:request.URL delegate:self]];
-    [request release];
 }
 
 
@@ -82,12 +72,12 @@
 
 - (void)geocodeAddressString:(NSString *)addressString {
 
-    GeocodingRequest * request = [[[GeocodingRequest alloc] initWithAddress:addressString] autorelease];
+    GeocodingRequest * request = [[GeocodingRequest alloc] initWithAddress:addressString];
     request.region = _region;
     request.language = _language;
 
-    if ([_delegate respondsToSelector:@selector(geocoderShouldUseSecureConnection:)]) {
-        request.secure = [_delegate geocoderShouldUseSecureConnection:self];
+    if ([self.delegate respondsToSelector:@selector(geocoderShouldUseSecureConnection:)]) {
+        request.secure = [self.delegate geocoderShouldUseSecureConnection:self];
     }
 
     [[QGeocoder mainQueue] addOperation:[RequestOperation requestOperationWithURL:request.URL delegate:self]];
@@ -104,7 +94,7 @@
 
 - (void)geocodeAddressString:(NSString *)addressString completionHandler:(CLGeocodeCompletionHandler)completionHandler {
 
-    GeocodingRequest * request = [[[GeocodingRequest alloc] initWithAddress:addressString] autorelease];
+    GeocodingRequest * request = [[GeocodingRequest alloc] initWithAddress:addressString];
     request.region = _region;
     request.language = _language;
 
@@ -113,8 +103,6 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             completionHandler(response.placemarks, error);
         });
-        
-        [response release];
     }];
 }
 
@@ -129,8 +117,8 @@
 
     GeocodeStatusCode statusCode = response.statusCode;
     if (statusCode == GeocodeStatusCodeOk || statusCode == GeocodeStatusCodeZeroResults) {
-        if ([_delegate respondsToSelector:@selector(geocoder:didFindPlacemarks:)]) {
-            [_delegate geocoder:self didFindPlacemarks:response.placemarks];
+        if ([self.delegate respondsToSelector:@selector(geocoder:didFindPlacemarks:)]) {
+            [self.delegate geocoder:self didFindPlacemarks:response.placemarks];
         }
     }
     else {
@@ -140,8 +128,8 @@
 
 - (void)request:(GeocodingRequest *)request didFailWithError:(NSError *)error {
 
-    if ([_delegate respondsToSelector:@selector(geocoder:didFailWithError:)]) {
-        [_delegate geocoder:self didFailWithError:error];        
+    if ([self.delegate respondsToSelector:@selector(geocoder:didFailWithError:)]) {
+        [self.delegate geocoder:self didFailWithError:error];        
     }
 }
 

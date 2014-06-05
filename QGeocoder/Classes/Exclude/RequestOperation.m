@@ -9,7 +9,10 @@
 #import "RequestOperation.h"
 #import "NSObject+RequestOperation.h"
 
-@interface RequestOperation ()
+@interface RequestOperation () {
+    BOOL _executing;
+    BOOL _finished;
+}
 @property (nonatomic, assign, getter=isExecuting) BOOL executing;
 @property (nonatomic, assign, getter=isFinished) BOOL finished;
 @end
@@ -17,31 +20,20 @@
 
 @implementation RequestOperation
 
-@synthesize delegate        = _delegate;
-@synthesize URL             = _URL;
-@synthesize responseData    = _responseData;
-
 #pragma mark - Geocoding or Reverse Geocoding
 
-+ (id)requestOperationWithURL:(NSURL *)URL delegate:(id)delegate {
-    return [[[self alloc] initWithURL:URL delegate:delegate] autorelease];
++ (instancetype)requestOperationWithURL:(NSURL *)URL delegate:(id)delegate {
+    return [[self alloc] initWithURL:URL delegate:delegate];
 }
 
 - (id)initWithURL:(NSURL *)URL delegate:(id)aDelegate {
     if (self = [super init]) {
-        _URL = [URL retain];
-        _delegate = [aDelegate retain];
+        _URL = URL;
+        _delegate = aDelegate;
         _finished = NO;
         _executing = NO;
     }
     return self;
-}
-
-- (void)dealloc {
-    [_delegate release], _delegate = nil;
-    [_connection release], _connection = nil;
-    [_responseData release], _responseData = nil;
-    [super dealloc];
 }
 
 #pragma mark - NSOperation
@@ -71,7 +63,7 @@
 }
 
 - (void)cancel {
-    [_connection cancel];
+    [self.connection cancel];
     
     [self willChangeValueForKey:@"isCancelled"];
     [super cancel];
@@ -88,12 +80,12 @@
     self.executing = YES;
     
     _connection = [[NSURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:self.URL] delegate:self];
-    [_connection start];
+    [self.connection start];
 }
 
 - (void)terminate {
-    [_connection release], _connection = nil;
-    [_URL release], _URL = nil;
+    _connection = nil;
+    _URL = nil;
     self.executing = NO;
     self.finished = YES;
 }
@@ -102,22 +94,25 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     if (!_responseData) {
-        _responseData = [[NSMutableData alloc] init];
+        _responseData = [[NSMutableData alloc] initWithData:data];
+    } else {
+        [self.responseData appendData:data];
     }
-    [_responseData appendData:data];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    if ([_delegate respondsToSelector:@selector(request:didFailWithError:)]) {
-        [_delegate request:self didFailWithError:error];
+    if ([self.delegate respondsToSelector:@selector(request:didFailWithError:)]) {
+        [self.delegate request:self didFailWithError:error];
     }
+
     [self terminate];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    if ([_delegate respondsToSelector:@selector(requestDidFinishLoading:)]) {
-        [_delegate requestDidFinishLoading:self];
+    if ([self.delegate respondsToSelector:@selector(requestDidFinishLoading:)]) {
+        [self.delegate requestDidFinishLoading:self];
     }
+
     [self terminate];
 }
 

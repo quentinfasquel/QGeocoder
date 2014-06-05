@@ -8,11 +8,7 @@
 
 #import <CoreLocation/CoreLocation.h>
 
-@interface QPlacemark : NSObject {
-    NSMutableDictionary * _addressDictionary;
-    CLLocation * _location;
-    CLRegion * _region;
-}
+@interface QPlacemark : NSObject
 
 @property (nonatomic, readonly) CLLocation * location;
 @property (nonatomic, readonly) CLRegion * region;

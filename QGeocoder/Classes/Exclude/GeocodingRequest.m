@@ -19,15 +19,6 @@ NSString * const GeocodingRequestOutputXML  = @"xml";
 
 @implementation GeocodingRequest
 
-@synthesize URL             = _URL;
-@synthesize coordinate      = _coordinate;
-@synthesize address         = _address;
-@synthesize southwest       = _southwest;
-@synthesize northeast       = _northeast;
-@synthesize region          = _region;
-@synthesize language        = _language;
-@synthesize secure          = _secure;
-
 #pragma mark - Geocoding or Reverse Geocoding
 
 - (id)initWithAddress:(NSString *)address {
@@ -48,12 +39,6 @@ NSString * const GeocodingRequestOutputXML  = @"xml";
         _southwest = kCLLocationCoordinate2DInvalid;        
     }
     return self;
-}
-
-- (void)dealloc {
-    [_address release], _address = nil;
-    [_region release], _region = nil;
-    [super dealloc];
 }
 
 #pragma mark - Accessing Request Attributes

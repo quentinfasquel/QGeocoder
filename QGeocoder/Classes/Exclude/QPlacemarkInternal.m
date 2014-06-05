@@ -53,14 +53,13 @@ const NSString * kPlacemarkSubLocality              = @"SubLocality";
 const NSString * kPlacemarkSubThoroughfare          = @"SubThoroughfare";
 const NSString * kPlacemarkThoroughfare             = @"Thoroughfare";
 
-
-@implementation QPlacemark (Internal)
+@implementation QPlacemark (Private)
 
 - (id)initWithDictionary:(NSDictionary *)dictionary {
     if ((self = [super init]))
     {
         _addressDictionary = [[NSMutableDictionary alloc] init];
-
+        
         // Address components
         NSDictionary * components = [dictionary objectForKey:kGeocodingResultAddressComponents];
         for (id component in components)
@@ -68,7 +67,7 @@ const NSString * kPlacemarkThoroughfare             = @"Thoroughfare";
             NSString * shortName = [component objectForKey:@"short_name"];
             NSString * longName = [component objectForKey:@"long_name"];
             NSArray * types = [component objectForKey:@"types"];
-
+            
             if ([types containsObject:kAddressComponentTypeLocality]) {
                 [_addressDictionary setObject:longName forKey:@"City"];
             }
@@ -109,12 +108,12 @@ const NSString * kPlacemarkThoroughfare             = @"Thoroughfare";
         _location = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
         
         // Region
-//        NSDictionary * northeast = [[geometry objectForKey:@"bounds"] objectForKey:@"northeast"];
-//        NSDictionary * southwest = [[geometry objectForKey:@"bounds"] objectForKey:@"southwest"];        
-//        CLLocationCoordinate2D NE = CLLocationCoordinate2DMake([[northeast objectForKey:kGeocodingResultLatitude] doubleValue],
-//                                                               [[northeast objectForKey:kGeocodingResultLongitude] doubleValue]);        
-//        CLLocationCoordinate2D SW = CLLocationCoordinate2DMake([[southwest objectForKey:kGeocodingResultLatitude] doubleValue],
-//                                                               [[southwest objectForKey:kGeocodingResultLongitude] doubleValue]);
+        //        NSDictionary * northeast = [[geometry objectForKey:@"bounds"] objectForKey:@"northeast"];
+        //        NSDictionary * southwest = [[geometry objectForKey:@"bounds"] objectForKey:@"southwest"];
+        //        CLLocationCoordinate2D NE = CLLocationCoordinate2DMake([[northeast objectForKey:kGeocodingResultLatitude] doubleValue],
+        //                                                               [[northeast objectForKey:kGeocodingResultLongitude] doubleValue]);
+        //        CLLocationCoordinate2D SW = CLLocationCoordinate2DMake([[southwest objectForKey:kGeocodingResultLatitude] doubleValue],
+        //                                                               [[southwest objectForKey:kGeocodingResultLongitude] doubleValue]);
         CLLocationDistance distance = 100.0;
         _region = [[CLRegion alloc] initCircularRegionWithCenter:CLLocationCoordinate2DMake(latitude, longitude)
                                                           radius:distance

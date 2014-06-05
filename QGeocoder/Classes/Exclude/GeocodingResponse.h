@@ -22,13 +22,9 @@ typedef enum {
     GeocodeStatusCodeInvalidRequest = 16
 } GeocodeStatusCode;
 
-@interface GeocodingResponse : NSObject {
-    NSArray *   _placemarks;
-    NSInteger   _statusCode;
-}
-
-@property (nonatomic, readonly) NSArray *   placemarks;
-@property (nonatomic, readonly) NSInteger   statusCode;
+@interface GeocodingResponse : NSObject
+@property (strong, nonatomic, readonly) NSArray *placemarks;
+@property (assign, nonatomic, readonly) NSInteger statusCode;
 
 - (id)initWithData:(NSData *)data;
 

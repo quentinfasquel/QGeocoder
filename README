@@ -1,8 +1,5 @@
 
 QGeocoder is similar to CLGeocoder, it provides services of forward- and reverse-geocoding, with the delegation pattern instead of completion blocks.
 The services use the Google Geocoding API : http://code.google.com/apis/maps/documentation/geocoding/#GeocodingRequests
-
-Since CLGeocoder is only available on iOS 5.0 and later, developers who look for more compatibility will be interested in QGeocoder.
-Plus, google geocoding is much better.
-
+If you believe google geocoding is much better.
 
