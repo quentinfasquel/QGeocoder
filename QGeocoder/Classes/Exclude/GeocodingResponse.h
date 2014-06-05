@@ -14,13 +14,13 @@ extern const NSString * kGeocodeStatusCodeOverQueryLimit;
 extern const NSString * kGeocodeStatusCodeRequestDenied;
 extern const NSString * kGeocodeStatusCodeInvalidRequest;
 
-typedef enum {
+typedef NS_ENUM(NSInteger, GeocodeStatusCode) {
     GeocodeStatusCodeOk             = 0,
     GeocodeStatusCodeZeroResults    = 2,
     GeocodeStatusCodeOverQueryLimit = 4,
     GeocodeStatusCodeRequestDenied  = 8,
     GeocodeStatusCodeInvalidRequest = 16
-} GeocodeStatusCode;
+};
 
 @interface GeocodingResponse : NSObject
 @property (strong, nonatomic, readonly) NSArray *placemarks;

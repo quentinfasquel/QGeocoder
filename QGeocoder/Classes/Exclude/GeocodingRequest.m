@@ -26,7 +26,6 @@ NSString * const GeocodingRequestOutputXML  = @"xml";
         _address = [address copy];
         _northeast = kCLLocationCoordinate2DInvalid;
         _southwest = kCLLocationCoordinate2DInvalid;
-
     }
     return self;
 }
@@ -72,7 +71,9 @@ NSString * const GeocodingRequestOutputXML  = @"xml";
 }
 
 - (NSURL *)URL {
-    return [NSURL URLWithString:[NSString stringWithFormat:(_secure ? GeocodingSecureURL : GeocodingURL), GeocodingRequestOutputJSON, [self parameters]]];
+    NSString *URLString = [NSString stringWithFormat:(_secure ? GeocodingSecureURL : GeocodingURL), GeocodingRequestOutputJSON, [self parameters]];
+    URLString = [URLString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    return [NSURL URLWithString:URLString];
 }
 
 @end

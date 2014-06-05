@@ -98,10 +98,16 @@
     request.region = _region;
     request.language = _language;
 
-    [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:request.URL] queue:[QGeocoder mainQueue] completionHandler:^(NSURLResponse * urlResponse, NSData * responseData, NSError * error){
-        GeocodingResponse * response = [[GeocodingResponse alloc] initWithData:responseData];
+    [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:request.URL] queue:[QGeocoder mainQueue] completionHandler:^(NSURLResponse * urlResponse, NSData * responseData, NSError * error) {
+        NSArray *placemarks = nil;
+    
+        if (!error) {
+            GeocodingResponse * response = [[GeocodingResponse alloc] initWithData:responseData];
+            placemarks = response.placemarks;
+        }
+
         dispatch_async(dispatch_get_main_queue(), ^{
-            completionHandler(response.placemarks, error);
+            completionHandler(placemarks, error);
         });
     }];
 }
