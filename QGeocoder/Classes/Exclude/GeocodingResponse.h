@@ -26,6 +26,6 @@ typedef NS_ENUM(NSInteger, GeocodeStatusCode) {
 @property (strong, nonatomic, readonly) NSArray *placemarks;
 @property (assign, nonatomic, readonly) NSInteger statusCode;
 
-- (id)initWithData:(NSData *)data;
+- (id)initWithData:(NSData *)data error:(NSError **)error;
 
 @end

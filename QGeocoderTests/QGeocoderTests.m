@@ -26,6 +26,7 @@
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
     self.geocoder = [QGeocoder new];
+    self.geocoder.components = @{@"country":@"US", @"locality":@"locality"};
 }
 
 - (void)tearDown
@@ -44,8 +45,8 @@
 {
     __block BOOL wait = YES;
 
-    NSString *addressString = @"San Francisco";
-    [self.geocoder geocodeAddressString:addressString completionHandler:^(NSArray *placemarks, NSError *error) {
+    [self.geocoder geocodeAddressString:@"Santa" completionHandler:^(NSArray *placemarks, NSError *error) {
+
         if (!error) {
             XCTAssert([placemarks isKindOfClass:[NSArray class]], @"placemarks should always be an array when there are no error, it can be empty.");
         } else {
@@ -56,6 +57,25 @@
     }];
     
     [self waitWithBool:&wait];
+}
+
+- (void)testAuthentificationGeocoding
+{
+    __block BOOL wait = YES;
+
+    [QGeocoder setGoogleClientID:nil];
+    [QGeocoder setGooglePrivateKey:nil];
+
+    [self.geocoder geocodeAddressString:@"San Francisco" completionHandler:^(NSArray *placemarks, NSError *error) {
+        XCTAssertNil(error, @"There should be no error if authentification work");
+        wait = NO;
+        
+        [QGeocoder setGoogleClientID:nil];
+        [QGeocoder setGooglePrivateKey:nil];
+    }];
+    
+    [self waitWithBool:&wait];
+
 }
 
 @end

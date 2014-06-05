@@ -12,6 +12,8 @@
 @protocol QGeocoderDelegate;
 
 @interface QGeocoder : NSObject
++ (void)setGoogleClientID:(NSString *)clientID;
++ (void)setGooglePrivateKey:(NSString *)privateKey;
 
 @property (nonatomic, retain) id <QGeocoderDelegate> delegate;
 @property (nonatomic, readonly, getter = isGeocoding) BOOL geocoding;
@@ -19,6 +21,7 @@
 // Optionnal parameters
 @property (nonatomic, copy) NSString * language;
 @property (nonatomic, copy) NSString * region;
+@property (nonatomic, strong) NSDictionary *components;
 
 - (void)reverseGeocodeLocation:(CLLocation *)location;
 

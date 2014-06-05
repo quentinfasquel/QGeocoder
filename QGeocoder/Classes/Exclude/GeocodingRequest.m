@@ -7,6 +7,8 @@
 //
 
 #import "GeocodingRequest.h"
+#include <CommonCrypto/CommonDigest.h>
+#include <CommonCrypto/CommonHMAC.h>
 
 static NSString * GeocodingURL          = @"http://maps.googleapis.com/maps/api/geocode/%@?%@";
 static NSString * GeocodingSecureURL    = @"https://maps.googleapis.com/maps/api/geocode/%@?%@";
@@ -18,6 +20,17 @@ NSString * const GeocodingRequestOutputXML  = @"xml";
 @end
 
 @implementation GeocodingRequest
+static NSString *_googleApiClientID;
+static NSString *_googleApiPrivateKey;
+
++ (void)setGoogleClientID:(NSString *)clientID {
+    _googleApiClientID = [clientID copy];
+}
+
++ (void)setGooglePrivateKey:(NSString *)privateKey {
+    _googleApiPrivateKey = [privateKey copy];
+}
+
 
 #pragma mark - Geocoding or Reverse Geocoding
 
@@ -64,16 +77,51 @@ NSString * const GeocodingRequestOutputXML  = @"xml";
         [parameters appendFormat:@"&language=%@", _language];
     }
     
+    if (_components.count) {
+        NSMutableString *components = [NSMutableString string];
+        [self.components enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
+            [components appendFormat:@"%@:%@|", key, obj];
+        }];
+        
+        [components deleteCharactersInRange:NSMakeRange(components.length-1, 1)];
+        [parameters appendFormat:@"&components=%@", components];
+    }
+    
     // sensor because iPhone is a device
     [parameters appendString:@"&sensor=false"];
-    
+
     return parameters;
+}
+
+- (NSString *)hmacsha1:(NSString *)data secret:(NSString *)key {
+    NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:key options:0];
+    key = [[NSString alloc] initWithData:decodedData encoding:NSUTF8StringEncoding];
+    
+    const char *cKey  = [key cStringUsingEncoding:NSASCIIStringEncoding];
+    const char *cData = [data cStringUsingEncoding:NSASCIIStringEncoding];
+    unsigned char cHMAC[CC_SHA1_DIGEST_LENGTH];
+    CCHmac(kCCHmacAlgSHA1, cKey, strlen(cKey), cData, strlen(cData), cHMAC);
+
+    NSData *HMAC = [[NSData alloc] initWithBytes:cHMAC length:sizeof(cHMAC)];
+    NSString *hash = [HMAC base64EncodedStringWithOptions:0];
+    return hash;
 }
 
 - (NSURL *)URL {
     NSString *URLString = [NSString stringWithFormat:(_secure ? GeocodingSecureURL : GeocodingURL), GeocodingRequestOutputJSON, [self parameters]];
     URLString = [URLString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    return [NSURL URLWithString:URLString];
+
+    NSURL *URL = [NSURL URLWithString:URLString];
+    
+    // Sign URL if needed
+    if (_googleApiClientID && _googleApiPrivateKey) {
+        NSString *toSign = [URL.path stringByAppendingFormat:@"?%@&client=%@", URL.query, _googleApiClientID];
+        NSString *signature = [self hmacsha1:toSign secret:_googleApiPrivateKey];
+        URLString = [URLString stringByAppendingFormat:@"&signature=%@", signature];
+        URL = [NSURL URLWithString:URLString];
+    }
+
+    return URL;
 }
 
 @end

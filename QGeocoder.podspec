@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name         = "QGeocoder"
-  s.version      = "0.3"
+  s.version      = "0.4"
   s.summary      = "QGeocoder is similar to CLGeocoder, support both delegation pattern and  blocks."
   s.description  = <<-DESC
 QGeocoder is similar to CLGeocoder, it provides services of forward- and reverse-geocoding, with the delegation pattern instead of completion blocks.
@@ -19,8 +19,8 @@ If you believe google geocoding is much better.
   s.license      = "Apache License, Version 2.0"
   s.author             = "Quentin Fasquel"
   s.social_media_url   = "http://twitter.com/quentinfasquel"
-  s.platform     = :ios, "5.0"
-  s.source       = { :git => "https://github.com/quentinfasquel/QGeocoder.git", :tag => "0.3" }
+  s.platform     = :ios, "7.0"
+  s.source       = { :git => "https://github.com/quentinfasquel/QGeocoder.git", :tag => "0.4" }
   s.source_files  = 'QGeocoder/Classes/**/*.{h,m}'
   s.public_header_files = 'QGeocoder/Classes/*.h'
   s.frameworks = "CoreLocation", "Foundation"

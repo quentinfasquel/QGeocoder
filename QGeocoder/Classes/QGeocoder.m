@@ -13,10 +13,24 @@
 #import "RequestOperation.h"
 
 @interface QGeocoder ()
+@property (strong, nonatomic) NSMapTable *completionHandlers;
 @end
 
 
 @implementation QGeocoder
+
++ (void)setGoogleClientID:(NSString *)clientID {
+    [GeocodingRequest setGoogleClientID:clientID];
+}
+
++ (void)setGooglePrivateKey:(NSString *)privateKey {
+    [GeocodingRequest setGooglePrivateKey:privateKey];
+}
+
+static NSString *_googleApiClientID;
++ (void)setGoogleApiClientID:(NSString *)clientID {
+    _googleApiClientID = [clientID copy];
+}
 
 + (NSOperationQueue *)mainQueue {
     static dispatch_once_t once;
@@ -25,6 +39,13 @@
         GeocoderQueue = [[NSOperationQueue alloc] init];
     });
     return GeocoderQueue;
+}
+
+- (id)init {
+    if ((self = [super init])) {
+        _completionHandlers = [NSMapTable mapTableWithKeyOptions:NSMapTableStrongMemory valueOptions:NSMapTableCopyIn];
+    }
+    return self;
 }
 
 #pragma mark - Managing Geocoding Requests
@@ -75,6 +96,7 @@
     GeocodingRequest * request = [[GeocodingRequest alloc] initWithAddress:addressString];
     request.region = _region;
     request.language = _language;
+    request.components = _components;
 
     if ([self.delegate respondsToSelector:@selector(geocoderShouldUseSecureConnection:)]) {
         request.secure = [self.delegate geocoderShouldUseSecureConnection:self];
@@ -84,7 +106,6 @@
 }
 
 - (void)geocodeAddressString:(NSString *)addressString inRegion:(CLRegion *)region {
-    [self cancelGeocode];
 #pragma warning TODO
 }
 
@@ -97,19 +118,12 @@
     GeocodingRequest * request = [[GeocodingRequest alloc] initWithAddress:addressString];
     request.region = _region;
     request.language = _language;
+    request.components = _components;
 
-    [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:request.URL] queue:[QGeocoder mainQueue] completionHandler:^(NSURLResponse * urlResponse, NSData * responseData, NSError * error) {
-        NSArray *placemarks = nil;
-    
-        if (!error) {
-            GeocodingResponse * response = [[GeocodingResponse alloc] initWithData:responseData];
-            placemarks = response.placemarks;
-        }
+    RequestOperation *operation = [RequestOperation requestOperationWithURL:request.URL delegate:self];
 
-        dispatch_async(dispatch_get_main_queue(), ^{
-            completionHandler(placemarks, error);
-        });
-    }];
+    [self.completionHandlers setObject:completionHandler forKey:operation];
+    [[QGeocoder mainQueue] addOperation:operation];
 }
 
 - (void)geocodeAddressString:(NSString *)addressString inRegion:(CLRegion *)region completionHandler:(CLGeocodeCompletionHandler)completionHandler {
@@ -118,25 +132,30 @@
 
 #pragma mark - Managing Internal Requests
 
-- (void)requestDidFinishLoading:(RequestOperation *)request {
-    GeocodingResponse * response = [[GeocodingResponse alloc] initWithData:request.responseData];
+- (void)completeRequestOperation:(RequestOperation *)request placemarks:(NSArray *)placemarks error:(NSError *)error {
+    CLGeocodeCompletionHandler completionHandler = [self.completionHandlers objectForKey:request];
+    if (completionHandler) {
+        completionHandler(placemarks, error);
+        [self.completionHandlers removeObjectForKey:request];
 
-    GeocodeStatusCode statusCode = response.statusCode;
-    if (statusCode == GeocodeStatusCodeOk || statusCode == GeocodeStatusCodeZeroResults) {
-        if ([self.delegate respondsToSelector:@selector(geocoder:didFindPlacemarks:)]) {
-            [self.delegate geocoder:self didFindPlacemarks:response.placemarks];
-        }
     }
-    else {
-        // TODO "Receive unexpected status code"
+    
+    if (!error && [self.delegate respondsToSelector:@selector(geocoder:didFindPlacemarks:)]) {
+        [self.delegate geocoder:self didFindPlacemarks:placemarks];
+    }
+    else if (error && [self.delegate respondsToSelector:@selector(geocoder:didFailWithError:)]) {
+        [self.delegate geocoder:self didFailWithError:error];
     }
 }
 
-- (void)request:(GeocodingRequest *)request didFailWithError:(NSError *)error {
+- (void)requestDidFinishLoading:(RequestOperation *)request {
+    NSError *error = nil;
+    GeocodingResponse * response = [[GeocodingResponse alloc] initWithData:request.responseData error:&error];
+    [self completeRequestOperation:request placemarks:response.placemarks error:error];
+}
 
-    if ([self.delegate respondsToSelector:@selector(geocoder:didFailWithError:)]) {
-        [self.delegate geocoder:self didFailWithError:error];        
-    }
+- (void)request:(RequestOperation *)request didFailWithError:(NSError *)error {
+    [self completeRequestOperation:request placemarks:nil error:error];
 }
 
 @end

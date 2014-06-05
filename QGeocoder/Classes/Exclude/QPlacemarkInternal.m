@@ -69,29 +69,29 @@ const NSString * kPlacemarkThoroughfare             = @"Thoroughfare";
             NSArray * types = [component objectForKey:@"types"];
             
             if ([types containsObject:kAddressComponentTypeLocality]) {
-                [_addressDictionary setObject:longName forKey:@"City"];
+                [_addressDictionary setObject:longName forKey:kPlacemarkLocality];
             }
             else if ([types containsObject:kAddressComponentTypeSubLocality]) {
-                [_addressDictionary setObject:longName forKey:@"SubLocaliy"];
+                [_addressDictionary setObject:longName forKey:kPlacemarkSubLocality];
             }
             else if ([types containsObject:kAddressComponentTypeCountry]) {
-                [_addressDictionary setObject:longName forKey:@"Country"];
-                [_addressDictionary setObject:shortName forKey:@"CountryCode"];
+                [_addressDictionary setObject:longName forKey:kPlacemarkCountry];
+                [_addressDictionary setObject:shortName forKey:kPlacemarkISOcountryCode];
             }
             else if ([types containsObject:kAddressComponentTypePostalCode]) {
-                [_addressDictionary setObject:longName forKey:@"ZIP"];
+                [_addressDictionary setObject:longName forKey:kPlacemarkPostalCode];
             }
             else if ([types containsObject:kAddressComponentTypeAdministrativeAreaLevel1]) {
-                [_addressDictionary setObject:longName forKey:@"State"];
+                [_addressDictionary setObject:shortName forKey:kPlacemarkAdministrativeArea];
             }
             else if ([types containsObject:kAddressComponentTypeAdministrativeAreaLevel2]) {
-                [_addressDictionary setObject:longName forKey:@"SubAdministrativeArea"];
+                [_addressDictionary setObject:longName forKey:kPlacemarkSubAdministrativeArea];
             }
             else if ([types containsObject:kAddressComponentTypeRoute]) {
-                [_addressDictionary setObject:longName forKey:@"Thoroughfare"];
+                [_addressDictionary setObject:longName forKey:kPlacemarkThoroughfare];
             }
             else if ([types containsObject:kAddressComponentTypeStreetNumber]) {
-                [_addressDictionary setObject:longName forKey:@"SubThoroughfare"];
+                [_addressDictionary setObject:longName forKey:kPlacemarkSubThoroughfare];
             }
         }
         

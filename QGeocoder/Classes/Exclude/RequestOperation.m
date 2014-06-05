@@ -13,6 +13,7 @@
     BOOL _executing;
     BOOL _finished;
 }
+
 @property (nonatomic, assign, getter=isExecuting) BOOL executing;
 @property (nonatomic, assign, getter=isFinished) BOOL finished;
 @end
@@ -23,13 +24,14 @@
 #pragma mark - Geocoding or Reverse Geocoding
 
 + (instancetype)requestOperationWithURL:(NSURL *)URL delegate:(id)delegate {
-    return [[self alloc] initWithURL:URL delegate:delegate];
+    RequestOperation *operation = [[self alloc] initWithURL:URL];
+    operation.delegate = delegate;
+    return operation;
 }
 
-- (id)initWithURL:(NSURL *)URL delegate:(id)aDelegate {
+- (id)initWithURL:(NSURL *)URL {
     if (self = [super init]) {
         _URL = URL;
-        _delegate = aDelegate;
         _finished = NO;
         _executing = NO;
     }
@@ -104,7 +106,7 @@
     if ([self.delegate respondsToSelector:@selector(request:didFailWithError:)]) {
         [self.delegate request:self didFailWithError:error];
     }
-
+    
     [self terminate];
 }
 
