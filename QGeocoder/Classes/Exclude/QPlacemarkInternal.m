@@ -53,13 +53,16 @@ const NSString * kPlacemarkSubLocality              = @"SubLocality";
 const NSString * kPlacemarkSubThoroughfare          = @"SubThoroughfare";
 const NSString * kPlacemarkThoroughfare             = @"Thoroughfare";
 
-@implementation QPlacemark (Private)
 
-- (id)initWithDictionary:(NSDictionary *)dictionary {
-    if ((self = [super init]))
+@implementation QPlacemark (Internal)
+
+- (id)initWithDictionary:(NSDictionary *)dictionary
+{
+    self = [super init];
+    if (self)
     {
-        _addressDictionary = [[NSMutableDictionary alloc] init];
-        
+        NSMutableDictionary *addressComponents = [[NSMutableDictionary alloc] init];
+
         // Address components
         NSDictionary * components = [dictionary objectForKey:kGeocodingResultAddressComponents];
         for (id component in components)
@@ -69,56 +72,51 @@ const NSString * kPlacemarkThoroughfare             = @"Thoroughfare";
             NSArray * types = [component objectForKey:@"types"];
             
             if ([types containsObject:kAddressComponentTypeLocality]) {
-                [_addressDictionary setObject:longName forKey:kPlacemarkLocality];
+                addressComponents[kPlacemarkLocality] = longName;
             }
             else if ([types containsObject:kAddressComponentTypeSubLocality]) {
-                [_addressDictionary setObject:longName forKey:kPlacemarkSubLocality];
+                addressComponents[kPlacemarkSubLocality] = longName;
             }
             else if ([types containsObject:kAddressComponentTypeCountry]) {
-                [_addressDictionary setObject:longName forKey:kPlacemarkCountry];
-                [_addressDictionary setObject:shortName forKey:kPlacemarkISOcountryCode];
+                addressComponents[kPlacemarkCountry] = longName;
+                addressComponents[kPlacemarkISOcountryCode] = shortName;
             }
             else if ([types containsObject:kAddressComponentTypePostalCode]) {
-                [_addressDictionary setObject:longName forKey:kPlacemarkPostalCode];
+                addressComponents[kPlacemarkPostalCode] = longName;
             }
             else if ([types containsObject:kAddressComponentTypeAdministrativeAreaLevel1]) {
-                [_addressDictionary setObject:shortName forKey:kPlacemarkAdministrativeArea];
+                addressComponents[kPlacemarkAdministrativeArea] = shortName;
             }
             else if ([types containsObject:kAddressComponentTypeAdministrativeAreaLevel2]) {
-                [_addressDictionary setObject:longName forKey:kPlacemarkSubAdministrativeArea];
+                addressComponents[kPlacemarkSubAdministrativeArea] = longName;
             }
             else if ([types containsObject:kAddressComponentTypeRoute]) {
-                [_addressDictionary setObject:longName forKey:kPlacemarkThoroughfare];
+                addressComponents[kPlacemarkThoroughfare] = longName;
             }
             else if ([types containsObject:kAddressComponentTypeStreetNumber]) {
-                [_addressDictionary setObject:longName forKey:kPlacemarkSubThoroughfare];
+                addressComponents[kPlacemarkSubThoroughfare] = longName;
             }
         }
         
         // Formatted address
-        NSArray * formattedAddressLines = [[dictionary objectForKey:kGeocodingResultFormattedAddress]
-                                           componentsSeparatedByString:@", "];
-        [_addressDictionary setObject:formattedAddressLines forKey:@"FormattedAddressLines"];
-        
+//        NSArray * formattedAddressLines = [[dictionary objectForKey:kGeocodingResultFormattedAddress] componentsSeparatedByString:@", "];
+        addressComponents[@"FormattedAddress"] = [dictionary objectForKey:kGeocodingResultFormattedAddress];
+
+        _addressComponents = [addressComponents copy];
+
         // Location
         NSDictionary * geometry     = [dictionary objectForKey:kGeocodingResultGeometry];
-        NSDictionary * location     = [geometry objectForKey:kGeocodingResultLocation];
-        CLLocationDegrees latitude  = [[location valueForKey:kGeocodingResultLatitude] doubleValue];
-        CLLocationDegrees longitude = [[location valueForKey:kGeocodingResultLongitude] doubleValue];
+        NSDictionary * locationData = [geometry objectForKey:kGeocodingResultLocation];
+        CLLocationDegrees latitude  = [[locationData valueForKey:kGeocodingResultLatitude] doubleValue];
+        CLLocationDegrees longitude = [[locationData valueForKey:kGeocodingResultLongitude] doubleValue];
         _location = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
-        
+
         // Region
-        //        NSDictionary * northeast = [[geometry objectForKey:@"bounds"] objectForKey:@"northeast"];
-        //        NSDictionary * southwest = [[geometry objectForKey:@"bounds"] objectForKey:@"southwest"];
-        //        CLLocationCoordinate2D NE = CLLocationCoordinate2DMake([[northeast objectForKey:kGeocodingResultLatitude] doubleValue],
-        //                                                               [[northeast objectForKey:kGeocodingResultLongitude] doubleValue]);
-        //        CLLocationCoordinate2D SW = CLLocationCoordinate2DMake([[southwest objectForKey:kGeocodingResultLatitude] doubleValue],
-        //                                                               [[southwest objectForKey:kGeocodingResultLongitude] doubleValue]);
         CLLocationDistance distance = 100.0;
-        _region = [[CLRegion alloc] initCircularRegionWithCenter:CLLocationCoordinate2DMake(latitude, longitude)
-                                                          radius:distance
-                                                      identifier:nil];
+        CLLocationCoordinate2D regionCenter = CLLocationCoordinate2DMake(latitude, longitude);
+        _region = [[CLCircularRegion alloc] initWithCenter:regionCenter radius:distance identifier:nil];
     }
+
     return self;
 }
 

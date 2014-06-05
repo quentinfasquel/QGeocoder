@@ -20,21 +20,22 @@ extern NSString * const GeocodingRequestOutputXML;
  *
  */
 @interface GeocodingRequest : NSObject
-
+@property (copy, nonatomic, readonly) NSString *address;
 @property (strong, nonatomic, readonly) NSURL *URL;
-@property (copy, nonatomic) NSString *address;
-@property (copy, nonatomic) NSString *region;
-@property (copy, nonatomic) NSString *language;
-@property (strong, nonatomic) NSDictionary *components;
-@property (assign, nonatomic) CLLocationCoordinate2D coordinate;
-@property (assign, nonatomic) CLLocationCoordinate2D southwest;
-@property (assign, nonatomic) CLLocationCoordinate2D northeast;
-@property (assign, nonatomic) BOOL secure;
+@property (assign, nonatomic, readonly) CLLocationCoordinate2D coordinate;
+@property (assign, nonatomic, readonly) CLLocationCoordinate2D southwest;
+@property (assign, nonatomic, readonly) CLLocationCoordinate2D northeast;
 
-+ (void)setGoogleClientID:(NSString *)clientID;
-+ (void)setGooglePrivateKey:(NSString *)privateKey;
+// Optional parameters
+@property (strong, nonatomic) NSDictionary *components;
+@property (copy, nonatomic) NSString *language;
+@property (copy, nonatomic) NSString *region;
+@property (assign, nonatomic) BOOL secure;
 
 - (id)initWithAddress:(NSString *)address;
 - (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate;
+
++ (void)setGoogleClientID:(NSString *)clientID;
++ (void)setGooglePrivateKey:(NSString *)privateKey;
 
 @end

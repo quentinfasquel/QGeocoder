@@ -8,6 +8,7 @@
 
 #import "QPlacemark.h"
 
+// Google Geocoding API keys
 extern const NSString * kAddressComponentTypeStreet;
 extern const NSString * kAddressComponentTypeRoute;
 extern const NSString * kAddressComponentTypeIntersection;
@@ -27,12 +28,12 @@ extern const NSString * kAddressComponentTypeNaturalFeature;
 extern const NSString * kAddressComponentTypeAirport;
 extern const NSString * kAddressComponentTypePark;
 extern const NSString * kAddressComponentTypePOI;
-//
 extern const NSString * kAddressComponentTypeStreetNumber;
 extern const NSString * kAddressComponentTypePostBox;
 extern const NSString * kAddressComponentTypeFloor;
 extern const NSString * kAddressComponentTypeRoom;
 
+// Internal keys
 extern const NSString * kPlacemarkAdministrativeArea;
 extern const NSString * kPlacemarkCountry;
 extern const NSString * kPlacemarkInlandWater;
@@ -47,12 +48,15 @@ extern const NSString * kPlacemarkSubThoroughfare;
 extern const NSString * kPlacemarkThoroughfare;
 
 @interface QPlacemark () {
-    NSMutableDictionary * _addressDictionary;
-    CLLocation * _location;
-    CLRegion * _region;
+    CLLocation *_location;
+    CLRegion *_region;
+    NSDictionary *_addressComponents;
 }
+@property (strong, nonatomic) NSDictionary *addressComponents;
 @end
 
-@interface QPlacemark (Private)
+@interface QPlacemark (Internal)
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 @end
+
+

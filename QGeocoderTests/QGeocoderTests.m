@@ -15,11 +15,21 @@
 
 @implementation QGeocoderTests
 
-- (void)waitWithBool:(BOOL *)wait {
-    while (*wait) {
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+// Set the flag for a block completion handler
+#define StartBlock() __block BOOL waitingForBlock = YES
+
+// Set the flag to stop the loop
+#define EndBlock() waitingForBlock = NO
+
+// Wait and loop until flag is set
+#define WaitUntilBlockCompletes() WaitWhile(waitingForBlock)
+
+// Macro - Wait for condition to be NO/false in blocks and asynchronous calls
+#define WaitWhile(condition) \
+    while(condition) { \
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]]; \
     }
-}
+
 
 - (void)setUp
 {
@@ -43,39 +53,19 @@
 
 - (void)testSimpleGeocoding
 {
-    __block BOOL wait = YES;
+    StartBlock();
 
     [self.geocoder geocodeAddressString:@"Santa" completionHandler:^(NSArray *placemarks, NSError *error) {
-
         if (!error) {
             XCTAssert([placemarks isKindOfClass:[NSArray class]], @"placemarks should always be an array when there are no error, it can be empty.");
         } else {
             XCTAssertNotNil(error, @"if placemarks is nil, then an error should be there.");
         }
 
-        wait = NO;
+        EndBlock();
     }];
     
-    [self waitWithBool:&wait];
-}
-
-- (void)testAuthentificationGeocoding
-{
-    __block BOOL wait = YES;
-
-    [QGeocoder setGoogleClientID:nil];
-    [QGeocoder setGooglePrivateKey:nil];
-
-    [self.geocoder geocodeAddressString:@"San Francisco" completionHandler:^(NSArray *placemarks, NSError *error) {
-        XCTAssertNil(error, @"There should be no error if authentification work");
-        wait = NO;
-        
-        [QGeocoder setGoogleClientID:nil];
-        [QGeocoder setGooglePrivateKey:nil];
-    }];
-    
-    [self waitWithBool:&wait];
-
+    WaitUntilBlockCompletes();
 }
 
 @end

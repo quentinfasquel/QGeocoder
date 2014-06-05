@@ -11,11 +11,8 @@
 
 @implementation QPlacemark
 
-
-
 - (NSString *)description {
-    NSString * formattedAddress = [(NSArray *)[_addressDictionary objectForKey:@"FormattedAddressLines"] componentsJoinedByString:@", "];
-    return [NSString stringWithFormat:@"%@", formattedAddress];
+    return self.addressComponents[@"FormattedAddress"];
 }
 
 - (CLLocation *)location {
@@ -30,26 +27,27 @@
 }
 
 - (NSDictionary *)addressDictionary {
-    return _addressDictionary;
+    return nil;
 }
 
 - (NSString *)administrativeArea {
-    return [_addressDictionary objectForKey:kPlacemarkAdministrativeArea];
+    return self.addressComponents[kPlacemarkAdministrativeArea];
 }
 
 - (NSString *)country {
-    return [_addressDictionary objectForKey:kPlacemarkCountry];
+    return self.addressComponents[kPlacemarkCountry];
 }
 
 - (NSString *)inlandWater {
-    return [_addressDictionary objectForKey:kPlacemarkInlandWater];
+    return nil;
 }
+
 - (NSString *)ISOcountryCode {
-    return [_addressDictionary objectForKey:kPlacemarkISOcountryCode];
+    return self.addressComponents[kPlacemarkISOcountryCode];
 }
 
 - (NSString *)locality {
-    return [_addressDictionary objectForKey:kPlacemarkLocality];
+    return self.addressComponents[kPlacemarkLocality];
 }
 
 - (NSString *)name {
@@ -57,27 +55,27 @@
 }
 
 - (NSString *)ocean {
-    return [_addressDictionary objectForKey:kPlacemarkOcean];
+    return nil;
 }
 
 - (NSString *)postalCode {
-    return [_addressDictionary objectForKey:kPlacemarkPostalCode];
+    return self.addressComponents[kPlacemarkPostalCode];
 }
 
 - (NSString *)subAdministrativeArea {
-    return [_addressDictionary objectForKey:kPlacemarkSubAdministrativeArea];
+    return self.addressComponents[kPlacemarkSubAdministrativeArea];
 }
 
 - (NSString *)subLocality {
-    return [_addressDictionary objectForKey:kPlacemarkSubLocality];
+    return self.addressComponents[kPlacemarkSubLocality];
 }
 
 - (NSString *)subThoroughfare {
-    return [_addressDictionary objectForKey:kPlacemarkSubThoroughfare];
+    return self.addressComponents[kPlacemarkSubThoroughfare];
 }
 
 - (NSString *)thoroughfare {
-    return [_addressDictionary objectForKey:kPlacemarkThoroughfare];
+    return self.addressComponents[kPlacemarkThoroughfare];
 }
 
 @end

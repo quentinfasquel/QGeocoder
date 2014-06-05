@@ -9,10 +9,10 @@
 #import "QGeocoder.h"
 #import "GeocodingRequest.h"
 #import "GeocodingResponse.h"
+#import "QRequestOperation.h"
 
-#import "RequestOperation.h"
-
-@interface QGeocoder ()
+@interface QGeocoder () <QRequestOperationDelegate>
+@property (strong, nonatomic) NSOperationQueue *requestQueue;
 @property (strong, nonatomic) NSMapTable *completionHandlers;
 @end
 
@@ -27,23 +27,10 @@
     [GeocodingRequest setGooglePrivateKey:privateKey];
 }
 
-static NSString *_googleApiClientID;
-+ (void)setGoogleApiClientID:(NSString *)clientID {
-    _googleApiClientID = [clientID copy];
-}
-
-+ (NSOperationQueue *)mainQueue {
-    static dispatch_once_t once;
-    static NSOperationQueue * GeocoderQueue = nil;
-    dispatch_once(&once, ^{
-        GeocoderQueue = [[NSOperationQueue alloc] init];
-    });
-    return GeocoderQueue;
-}
-
 - (id)init {
     if ((self = [super init])) {
         _completionHandlers = [NSMapTable mapTableWithKeyOptions:NSMapTableStrongMemory valueOptions:NSMapTableCopyIn];
+        _requestQueue = [NSOperationQueue new];
     }
     return self;
 }
@@ -51,110 +38,85 @@ static NSString *_googleApiClientID;
 #pragma mark - Managing Geocoding Requests
 
 - (void)cancelGeocode {
-    [[QGeocoder mainQueue] cancelAllOperations];
+    [self.requestQueue cancelAllOperations];
 }
 
 - (BOOL)isGeocoding {
-    if ([[QGeocoder mainQueue] operationCount] < 1) {
+    if (self.requestQueue.operationCount < 1) {
         return NO;
     }
 
-    for (NSOperation * operation in [[QGeocoder mainQueue] operations]) {
-        if ([operation isExecuting]) {
+    for (NSOperation * operation in self.requestQueue.operations) {
+        if (operation.isExecuting) {
             return YES;
         }
     }
-    
+
     return NO;
+}
+
+- (void)completeRequestOperation:(QRequestOperation *)request placemarks:(NSArray *)placemarks error:(NSError *)error {
+    CLGeocodeCompletionHandler completionHandler = [self.completionHandlers objectForKey:request];
+    if (completionHandler) {
+        completionHandler(placemarks, error);
+        [self.completionHandlers removeObjectForKey:request];
+    }
 }
 
 #pragma mark - Reverse Geocoding a Location
 
-- (void)reverseGeocodeLocation:(CLLocation *)location {
-    [self cancelGeocode];
-    
+- (void)reverseGeocodeLocation:(CLLocation *)location completionHandler:(CLGeocodeCompletionHandler)completionHandler {
     GeocodingRequest * request = [[GeocodingRequest alloc] initWithCoordinate:location.coordinate];
-    request.region = _region;
-    request.language = _language;
+    request.components = self.components;
+    request.language = self.language;
+    request.region = self.region;
+#ifdef DEBUG
+    request.secure = NO;
+#else
+    request.secure = YES;
+#endif
 
-    if ([self.delegate respondsToSelector:@selector(geocoderShouldUseSecureConnection:)]) {
-        request.secure = [self.delegate geocoderShouldUseSecureConnection:self];
-    }
-
-    [[QGeocoder mainQueue] addOperation:[RequestOperation requestOperationWithURL:request.URL delegate:self]];
+    QRequestOperation *operation = [QRequestOperation requestOperationWithURL:request.URL delegate:self];
+    [self.completionHandlers setObject:[completionHandler copy] forKey:operation];
+    [self.requestQueue addOperation:operation];
 }
-
 
 #pragma mark - Geocoding an Address
 
-- (void)geocodeAddressDictionary:(NSDictionary *)addressDictionary {
-#pragma warning TODO
-}
-
-- (void)geocodeAddressString:(NSString *)addressString {
-
-    GeocodingRequest * request = [[GeocodingRequest alloc] initWithAddress:addressString];
-    request.region = _region;
-    request.language = _language;
-    request.components = _components;
-
-    if ([self.delegate respondsToSelector:@selector(geocoderShouldUseSecureConnection:)]) {
-        request.secure = [self.delegate geocoderShouldUseSecureConnection:self];
-    }
-
-    [[QGeocoder mainQueue] addOperation:[RequestOperation requestOperationWithURL:request.URL delegate:self]];
-}
-
-- (void)geocodeAddressString:(NSString *)addressString inRegion:(CLRegion *)region {
-#pragma warning TODO
-}
-
 - (void)geocodeAddressDictionary:(NSDictionary *)addressDictionary completionHandler:(CLGeocodeCompletionHandler)completionHandler {
-#pragma warning TODO
+    @throw [NSException exceptionWithName:@"" reason:@"" userInfo:nil];
 }
 
 - (void)geocodeAddressString:(NSString *)addressString completionHandler:(CLGeocodeCompletionHandler)completionHandler {
 
     GeocodingRequest * request = [[GeocodingRequest alloc] initWithAddress:addressString];
-    request.region = _region;
-    request.language = _language;
-    request.components = _components;
+    request.components = self.components;
+    request.language = self.language;
+    request.region = self.region;
+#ifdef DEBUG
+    request.secure = NO;
+#else
+    request.secure = YES;
+#endif
 
-    RequestOperation *operation = [RequestOperation requestOperationWithURL:request.URL delegate:self];
-
-    [self.completionHandlers setObject:completionHandler forKey:operation];
-    [[QGeocoder mainQueue] addOperation:operation];
+    QRequestOperation *operation = [QRequestOperation requestOperationWithURL:request.URL delegate:self];
+    [self.completionHandlers setObject:[completionHandler copy] forKey:operation];
+    [self.requestQueue addOperation:operation];
 }
 
 - (void)geocodeAddressString:(NSString *)addressString inRegion:(CLRegion *)region completionHandler:(CLGeocodeCompletionHandler)completionHandler {
 #pragma warning TODO
 }
 
-#pragma mark - Managing Internal Requests
+#pragma mark - Request operation delegate
 
-- (void)completeRequestOperation:(RequestOperation *)request placemarks:(NSArray *)placemarks error:(NSError *)error {
-    CLGeocodeCompletionHandler completionHandler = [self.completionHandlers objectForKey:request];
-    if (completionHandler) {
-        completionHandler(placemarks, error);
-        [self.completionHandlers removeObjectForKey:request];
-
-    }
-    
-    if (!error && [self.delegate respondsToSelector:@selector(geocoder:didFindPlacemarks:)]) {
-        [self.delegate geocoder:self didFindPlacemarks:placemarks];
-    }
-    else if (error && [self.delegate respondsToSelector:@selector(geocoder:didFailWithError:)]) {
-        [self.delegate geocoder:self didFailWithError:error];
-    }
-}
-
-- (void)requestDidFinishLoading:(RequestOperation *)request {
+- (void)requestDidFinishLoading:(QRequestOperation *)request {
     NSError *error = nil;
     GeocodingResponse * response = [[GeocodingResponse alloc] initWithData:request.responseData error:&error];
-    [self completeRequestOperation:request placemarks:response.placemarks error:error];
+    [self completeRequestOperation:request placemarks:[response.placemarks copy] error:error];
 }
 
-- (void)request:(RequestOperation *)request didFailWithError:(NSError *)error {
+- (void)request:(QRequestOperation *)request didFailWithError:(NSError *)error {
     [self completeRequestOperation:request placemarks:nil error:error];
 }
 

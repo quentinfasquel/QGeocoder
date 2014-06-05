@@ -13,12 +13,10 @@
 		C90CE52A193FFA0800E7ED66 /* GeocodingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C90CE51B193FFA0800E7ED66 /* GeocodingRequest.m */; };
 		C90CE52B193FFA0800E7ED66 /* GeocodingResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = C90CE51C193FFA0800E7ED66 /* GeocodingResponse.h */; };
 		C90CE52C193FFA0800E7ED66 /* GeocodingResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C90CE51D193FFA0800E7ED66 /* GeocodingResponse.m */; };
-		C90CE52D193FFA0800E7ED66 /* NSObject+RequestOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = C90CE51E193FFA0800E7ED66 /* NSObject+RequestOperation.h */; };
-		C90CE52E193FFA0800E7ED66 /* NSObject+RequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C90CE51F193FFA0800E7ED66 /* NSObject+RequestOperation.m */; };
 		C90CE52F193FFA0800E7ED66 /* QPlacemarkInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = C90CE520193FFA0800E7ED66 /* QPlacemarkInternal.h */; };
 		C90CE530193FFA0800E7ED66 /* QPlacemarkInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = C90CE521193FFA0800E7ED66 /* QPlacemarkInternal.m */; };
-		C90CE531193FFA0800E7ED66 /* RequestOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = C90CE522193FFA0800E7ED66 /* RequestOperation.h */; };
-		C90CE532193FFA0800E7ED66 /* RequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C90CE523193FFA0800E7ED66 /* RequestOperation.m */; };
+		C90CE531193FFA0800E7ED66 /* QRequestOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = C90CE522193FFA0800E7ED66 /* QRequestOperation.h */; };
+		C90CE532193FFA0800E7ED66 /* QRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C90CE523193FFA0800E7ED66 /* QRequestOperation.m */; };
 		C90CE533193FFA0800E7ED66 /* QGeocoder.h in Headers */ = {isa = PBXBuildFile; fileRef = C90CE524193FFA0800E7ED66 /* QGeocoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C90CE534193FFA0800E7ED66 /* QGeocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = C90CE525193FFA0800E7ED66 /* QGeocoder.m */; };
 		C90CE535193FFA0800E7ED66 /* QPlacemark.h in Headers */ = {isa = PBXBuildFile; fileRef = C90CE526193FFA0800E7ED66 /* QPlacemark.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -31,9 +29,8 @@
 		C93C139E19401169004191B4 /* QGeocoderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C93C139D19401169004191B4 /* QGeocoderTests.m */; };
 		C93C13A5194011DB004191B4 /* GeocodingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C90CE51B193FFA0800E7ED66 /* GeocodingRequest.m */; };
 		C93C13A6194011DB004191B4 /* GeocodingResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C90CE51D193FFA0800E7ED66 /* GeocodingResponse.m */; };
-		C93C13A7194011DB004191B4 /* NSObject+RequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C90CE51F193FFA0800E7ED66 /* NSObject+RequestOperation.m */; };
 		C93C13A8194011DB004191B4 /* QPlacemarkInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = C90CE521193FFA0800E7ED66 /* QPlacemarkInternal.m */; };
-		C93C13A9194011DB004191B4 /* RequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C90CE523193FFA0800E7ED66 /* RequestOperation.m */; };
+		C93C13A9194011DB004191B4 /* QRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C90CE523193FFA0800E7ED66 /* QRequestOperation.m */; };
 		C93C13AA194011DB004191B4 /* QGeocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = C90CE525193FFA0800E7ED66 /* QGeocoder.m */; };
 		C93C13AB194011DB004191B4 /* QPlacemark.m in Sources */ = {isa = PBXBuildFile; fileRef = C90CE527193FFA0800E7ED66 /* QPlacemark.m */; };
 /* End PBXBuildFile section */
@@ -59,12 +56,10 @@
 		C90CE51B193FFA0800E7ED66 /* GeocodingRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeocodingRequest.m; sourceTree = "<group>"; };
 		C90CE51C193FFA0800E7ED66 /* GeocodingResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeocodingResponse.h; sourceTree = "<group>"; };
 		C90CE51D193FFA0800E7ED66 /* GeocodingResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeocodingResponse.m; sourceTree = "<group>"; };
-		C90CE51E193FFA0800E7ED66 /* NSObject+RequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+RequestOperation.h"; sourceTree = "<group>"; };
-		C90CE51F193FFA0800E7ED66 /* NSObject+RequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+RequestOperation.m"; sourceTree = "<group>"; };
 		C90CE520193FFA0800E7ED66 /* QPlacemarkInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QPlacemarkInternal.h; sourceTree = "<group>"; };
 		C90CE521193FFA0800E7ED66 /* QPlacemarkInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QPlacemarkInternal.m; sourceTree = "<group>"; };
-		C90CE522193FFA0800E7ED66 /* RequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestOperation.h; sourceTree = "<group>"; };
-		C90CE523193FFA0800E7ED66 /* RequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestOperation.m; sourceTree = "<group>"; };
+		C90CE522193FFA0800E7ED66 /* QRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRequestOperation.h; sourceTree = "<group>"; };
+		C90CE523193FFA0800E7ED66 /* QRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRequestOperation.m; sourceTree = "<group>"; };
 		C90CE524193FFA0800E7ED66 /* QGeocoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QGeocoder.h; sourceTree = "<group>"; };
 		C90CE525193FFA0800E7ED66 /* QGeocoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QGeocoder.m; sourceTree = "<group>"; };
 		C90CE526193FFA0800E7ED66 /* QPlacemark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QPlacemark.h; sourceTree = "<group>"; };
@@ -181,12 +176,10 @@
 				C90CE51B193FFA0800E7ED66 /* GeocodingRequest.m */,
 				C90CE51C193FFA0800E7ED66 /* GeocodingResponse.h */,
 				C90CE51D193FFA0800E7ED66 /* GeocodingResponse.m */,
-				C90CE51E193FFA0800E7ED66 /* NSObject+RequestOperation.h */,
-				C90CE51F193FFA0800E7ED66 /* NSObject+RequestOperation.m */,
 				C90CE520193FFA0800E7ED66 /* QPlacemarkInternal.h */,
 				C90CE521193FFA0800E7ED66 /* QPlacemarkInternal.m */,
-				C90CE522193FFA0800E7ED66 /* RequestOperation.h */,
-				C90CE523193FFA0800E7ED66 /* RequestOperation.m */,
+				C90CE522193FFA0800E7ED66 /* QRequestOperation.h */,
+				C90CE523193FFA0800E7ED66 /* QRequestOperation.m */,
 			);
 			path = Exclude;
 			sourceTree = "<group>";
@@ -219,11 +212,10 @@
 			files = (
 				C90CE52B193FFA0800E7ED66 /* GeocodingResponse.h in Headers */,
 				C90CE529193FFA0800E7ED66 /* GeocodingRequest.h in Headers */,
-				C90CE531193FFA0800E7ED66 /* RequestOperation.h in Headers */,
+				C90CE531193FFA0800E7ED66 /* QRequestOperation.h in Headers */,
 				C90CE533193FFA0800E7ED66 /* QGeocoder.h in Headers */,
 				C90CE537193FFA0800E7ED66 /* QGeocoder-Prefix.pch in Headers */,
 				C90CE52F193FFA0800E7ED66 /* QPlacemarkInternal.h in Headers */,
-				C90CE52D193FFA0800E7ED66 /* NSObject+RequestOperation.h in Headers */,
 				C90CE535193FFA0800E7ED66 /* QPlacemark.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -314,9 +306,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C90CE52E193FFA0800E7ED66 /* NSObject+RequestOperation.m in Sources */,
 				C90CE536193FFA0800E7ED66 /* QPlacemark.m in Sources */,
-				C90CE532193FFA0800E7ED66 /* RequestOperation.m in Sources */,
+				C90CE532193FFA0800E7ED66 /* QRequestOperation.m in Sources */,
 				C90CE534193FFA0800E7ED66 /* QGeocoder.m in Sources */,
 				C90CE530193FFA0800E7ED66 /* QPlacemarkInternal.m in Sources */,
 				C90CE52A193FFA0800E7ED66 /* GeocodingRequest.m in Sources */,
@@ -330,9 +321,8 @@
 			files = (
 				C93C13A5194011DB004191B4 /* GeocodingRequest.m in Sources */,
 				C93C13A6194011DB004191B4 /* GeocodingResponse.m in Sources */,
-				C93C13A7194011DB004191B4 /* NSObject+RequestOperation.m in Sources */,
 				C93C13A8194011DB004191B4 /* QPlacemarkInternal.m in Sources */,
-				C93C13A9194011DB004191B4 /* RequestOperation.m in Sources */,
+				C93C13A9194011DB004191B4 /* QRequestOperation.m in Sources */,
 				C93C13AA194011DB004191B4 /* QGeocoder.m in Sources */,
 				C93C13AB194011DB004191B4 /* QPlacemark.m in Sources */,
 				C93C139E19401169004191B4 /* QGeocoderTests.m in Sources */,
@@ -539,6 +529,7 @@
 				C93C13A419401169004191B4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

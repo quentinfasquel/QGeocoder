@@ -6,31 +6,29 @@
 //
 //
 
-#import "RequestOperation.h"
-#import "NSObject+RequestOperation.h"
+#import "QRequestOperation.h"
 
-@interface RequestOperation () {
+@interface QRequestOperation () {
     BOOL _executing;
     BOOL _finished;
 }
-
-@property (nonatomic, assign, getter=isExecuting) BOOL executing;
-@property (nonatomic, assign, getter=isFinished) BOOL finished;
+@property (assign, nonatomic, getter=isExecuting) BOOL executing;
+@property (assign, nonatomic, getter=isFinished) BOOL finished;
+@property (strong, nonatomic, readwrite) NSURL *URL;
+@property (strong, nonatomic) NSURLConnection *connection;
 @end
 
 
-@implementation RequestOperation
-
-#pragma mark - Geocoding or Reverse Geocoding
+@implementation QRequestOperation
 
 + (instancetype)requestOperationWithURL:(NSURL *)URL delegate:(id)delegate {
-    RequestOperation *operation = [[self alloc] initWithURL:URL];
-    operation.delegate = delegate;
-    return operation;
+    return [[self alloc] initWithURL:URL delegate:delegate];
 }
 
-- (id)initWithURL:(NSURL *)URL {
-    if (self = [super init]) {
+- (id)initWithURL:(NSURL *)URL delegate:(id<QRequestOperationDelegate>)delegate {
+    self = [super init];
+    if (self) {
+        _delegate = delegate;
         _URL = URL;
         _finished = NO;
         _executing = NO;
@@ -78,21 +76,33 @@
         [self performSelectorOnMainThread:@selector(start) withObject:nil waitUntilDone:NO];
         return;
     }
-    
+
     self.executing = YES;
     
-    _connection = [[NSURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:self.URL] delegate:self];
+    NSURLRequest *URLRequest = [NSURLRequest requestWithURL:self.URL];
+    self.connection = [NSURLConnection connectionWithRequest:URLRequest delegate:self];
+
     [self.connection start];
 }
 
 - (void)terminate {
-    _connection = nil;
-    _URL = nil;
+    self.connection = nil;
     self.executing = NO;
     self.finished = YES;
+    self.URL = nil;
 }
 
 #pragma mark - NSURLConnection
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSHTTPURLResponse *)response {
+    if (response.statusCode != 200) {
+        [connection cancel];
+        
+        NSString *localizedFailureReason = [NSHTTPURLResponse localizedStringForStatusCode:response.statusCode];
+        NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:response.statusCode userInfo:@{NSLocalizedFailureReasonErrorKey: localizedFailureReason}];
+        [self connection:connection didFailWithError:error];
+    }
+}
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     if (!_responseData) {

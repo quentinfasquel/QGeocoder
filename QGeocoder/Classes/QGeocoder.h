@@ -9,40 +9,25 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
-@protocol QGeocoderDelegate;
-
-@interface QGeocoder : NSObject
-+ (void)setGoogleClientID:(NSString *)clientID;
-+ (void)setGooglePrivateKey:(NSString *)privateKey;
-
-@property (nonatomic, retain) id <QGeocoderDelegate> delegate;
+@interface QGeocoder : CLGeocoder
 @property (nonatomic, readonly, getter = isGeocoding) BOOL geocoding;
 
-// Optionnal parameters
-@property (nonatomic, copy) NSString * language;
-@property (nonatomic, copy) NSString * region;
-@property (nonatomic, strong) NSDictionary *components;
+// Optional parameters
+@property (strong, nonatomic) NSDictionary *components;
+@property (copy, nonatomic) NSString *language;
+@property (copy, nonatomic) NSString *region;
 
-- (void)reverseGeocodeLocation:(CLLocation *)location;
+// reverse geocode requests
+- (void)reverseGeocodeLocation:(CLLocation *)location completionHandler:(CLGeocodeCompletionHandler)completionHandler;
 
-- (void)geocodeAddressDictionary:(NSDictionary *)addressDictionary;
-- (void)geocodeAddressString:(NSString *)addressString;
-- (void)geocodeAddressString:(NSString *)addressString inRegion:(CLRegion *)region;
-
+// forward geocoder requests
 - (void)geocodeAddressDictionary:(NSDictionary *)addressDictionary completionHandler:(CLGeocodeCompletionHandler)completionHandler;
 - (void)geocodeAddressString:(NSString *)addressString completionHandler:(CLGeocodeCompletionHandler)completionHandler;
 - (void)geocodeAddressString:(NSString *)addressString inRegion:(CLRegion *)region completionHandler:(CLGeocodeCompletionHandler)completionHandler;
 
 - (void)cancelGeocode;
 
++ (void)setGoogleClientID:(NSString *)clientID;
++ (void)setGooglePrivateKey:(NSString *)privateKey;
+
 @end
-
-
-@protocol QGeocoderDelegate <NSObject>
-@required
-- (void)geocoder:(QGeocoder *)geocoder didFindPlacemarks:(NSArray *)placemarks;
-- (void)geocoder:(QGeocoder *)geocoder didFailWithError:(NSError *)error;
-@optional
-- (BOOL)geocoderShouldUseSecureConnection:(QGeocoder *)geocoder;
-@end
-
